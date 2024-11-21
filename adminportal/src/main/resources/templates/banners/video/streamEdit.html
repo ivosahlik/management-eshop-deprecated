@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div th:replace="common/macros :: verticalNavigation" />
+		<div class="row">
+			<form class="form-horizontal" th:object="${videoStreams}" th:action="@{/video/stream/edit}" method="post" enctype="multipart/form-data">
+				<fieldset>
+
+					<input hidden="hidden" name="id" th:value="${videoStreams.id}" />
+					<input hidden="hidden" name="video_banner_id" th:value="${videoStreams.video_banner_id}" />
+
+					<legend class="center-block">
+						Edit Stream<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<div class="alert alert-danger" role="alert" th:if="${message}">
+						<h2 th:text="${message}"/>
+					</div>
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Title</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${videoStreams.title}" required="required" placeholder="title" />
+							<span class="help-block">title</span>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Description</label>
+						<div class="col-md-8">
+							<input type="text" name="description" class="form-control"
+									  id="description" th:value="${videoStreams.description}"
+									  placeholder="description" />
+							<span class="help-block">Description of the banner</span>
+						</div>
+					</div>
+
+					<!-- stream URL -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="streamUrl">Stream URL</label>
+						<div class="col-md-8">
+							<input type="text" name="streamUrl" class="form-control"
+								   id="streamUrl" th:value="${videoStreams.streamUrl}"
+								   placeholder="streamUrl" />
+							<span class="help-block">Stream URL</span>
+						</div>
+					</div>
+
+					<!-- status of stream -->
+					<div class="form-group">
+						<label class="col-md-2 control-label">Status</label>
+						<div class="col-md-8">
+							<label>
+								<input value="true" type="radio" name="active" th:checked="${videoStreams.active}"/>Active
+							</label>
+							<label><input value="false" type="radio" name="active" th:checked="${!videoStreams.active}"/>Inactive </label>
+							<span class="help-block">Whether the stream is active or inactive</span>
+						</div>
+					</div>
+
+					<!-- newVideo of stream -->
+					<div class="form-group">
+						<label class="col-md-2 control-label">New Video</label>
+						<div class="col-md-8">
+							<label>
+								<input value="true" type="radio" name="newVideo" th:checked="${videoStreams.newVideo}"/>Active
+							</label>
+							<label><input value="false" type="radio" name="newVideo" th:checked="${!videoStreams.newVideo}"/>Inactive </label>
+							<span class="help-block">Whether the stream is active or inactive</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Update Stream</button>
+							<a class="btn btn-danger" th:href="@{/video/stream/list}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

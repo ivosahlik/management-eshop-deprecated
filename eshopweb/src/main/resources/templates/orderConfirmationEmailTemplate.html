@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="initial-scale=0.5"/>
+</head>
+<body style="font-family: 'Rubik', sans-serif;font-size: 12px;">
+    <div>
+        <p>Dear customer,</p>
+        <p>Thank you for your order at www.membrania.eu by DC Solutions s.r.o. company. Your order will be processed as soon as possible.</p>
+        <p>Your order number is: <strong>#<span th:text="${order.id}"></span></strong>.</p>
+        <p>Please, your order confirmation you can find in the attachment.</p>
+        <p>Here is your order detail:</p>
+    </div>
+    <div>
+        <div>
+            <div>
+                <div>
+                    <h2>
+                        Order Detail for Purchase #<span th:text="${order.id}"></span>
+                    </h2>
+                </div>
+                <table style="border-collapse: collapse;border: 1px solid black;">
+                    <tr style="border-collapse: collapse;border: 1px solid black;">
+                        <th style="border-collapse: collapse;border: 1px solid black;">Billing Detail</th>
+                        <th style="border-collapse: collapse;border: 1px solid black;">Shipping Address</th>
+                    </tr>
+                    <tr style="border-collapse: collapse;border: 1px solid black;">
+                        <td style="border-collapse: collapse;border: 1px solid black;">
+                            <span th:text="${order.billingAddress.billingAddressName}"></span><br/>
+                            <span th:text="${order.billingAddress.billingAddressStreet1}"></span><br/>
+                            <span th:text="${order.billingAddress.billingAddressCity}"></span><br/>
+                            <span th:text="${order.billingAddress.billingAddressState}"></span><br/>
+                            <span th:text="${order.billingAddress.billingAddressZipcode}"></span><br/>
+                        </td>
+                        <td style="border-collapse: collapse;border: 1px solid black;">
+                            <span th:text="${order.shippingAddress.shippingAddressName}"></span><br/>
+                            <span th:text="${order.shippingAddress.shippingAddressStreet1}"></span><br/>
+                            <span th:text="${order.shippingAddress.shippingAddressCity}"></span><br/>
+                            <span th:text="${order.shippingAddress.shippingAddressState}"></span><br/>
+                            <span th:text="${order.shippingAddress.shippingAddressZipcode}"></span><br/>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <div>
+                <div>
+                    <h3>
+                        <strong>Order Summary</strong>
+                    </h3>
+                </div>
+                <div>
+                    <div>
+                        <table style="border-collapse: collapse;border: 1px solid black;">
+                            <tr style="border-collapse: collapse;border: 1px solid black;">
+                                <td style="border-collapse: collapse;border: 1px solid black;"><strong>Item Name</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="text-center"><strong>Item Price</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="text-center"><strong>Item Quantity</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="text-right"><strong>Total</strong></td>
+                            </tr>
+
+                            <tr style="border-collapse: collapse;border: 1px solid black;" th:each="cartItem : ${cartItemList}">
+                                <td style="border-collapse: collapse;border: 1px solid black;" data-th-text="${cartItem.product.productName}"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="text-center">
+                                    <span th:text="#{product.currency.euro}"></span>
+                                    <span data-th-text="${cartItem.product.ourPrice}"></span>
+                                </td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="text-center" data-th-text="${cartItem.qty}"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="text-center">
+                                    <span th:text="#{product.currency.euro}"></span>
+                                    <span data-th-text="${cartItem.subtotal}"></span>
+                                </td>
+                            </tr>
+
+                            <tr style="border-collapse: collapse;border: 1px solid black;">
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="highrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="highrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="highrow text-right subtotal-border-top"><strong>Total Before Vat</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="highrow text-right subtotal-border-top">
+                                    <span th:text="#{product.currency.euro}"></span>
+                                    <span data-th-text="${order.orderTotal}"></span>
+                                </td>
+                            </tr>
+                            <tr style="border-collapse: collapse;border: 1px solid black;">
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow text-right"><strong>VAT(21%)</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow text-right">
+                                    <span th:text="#{product.currency.euro}"></span>
+                                    <span data-th-text="${order.orderGrandTotalVat}"></span>
+                                </td>
+                            </tr>
+                            <tr style="border-collapse: collapse;border: 1px solid black;">
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow text-right"><strong>Shipping included (DHL)</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow text-right">
+                                    <strong>
+                                        <div th:replace="common/macros :: orderShippingAndOrderGrandWidthTotal" />
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr style="border-collapse: collapse;border: 1px solid black;" th:if="${lessThenCrateLtc}">
+                                <td style="border-collapse: collapse;border: 1px solid black;"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;"><strong>Less Then crate included (Ltc):</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;">
+                                    <span th:text="#{product.currency.euro}"></span>
+                                    <span  th:text="${#numbers.formatDecimal(300, 1 ,2)}"></span>
+                                </td>
+                            </tr>
+                            <tr style="border-collapse: collapse;border: 1px solid black;">
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow text-right"><strong>Shipping weight (kg)</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow text-right">
+                                    <span data-th-text="${order.orderGrandWidthTotal}"></span>
+                                    <span th:text="#{product.width.kg}"></span>
+                                </td>
+                            </tr>
+                            <tr style="border-collapse: collapse;border: 1px solid black;">
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black;" class="emptyrow"></td>
+                                <td style="border-collapse: collapse;border: 1px solid black; background-color: #b7b7b7; font-size: 16px;" class="emptyrow text-right"><strong>Order Total</strong></td>
+                                <td style="border-collapse: collapse;border: 1px solid black; background-color: #b7b7b7; font-weight: bold; font-size: 16px;" class="emptyrow text-right">
+                                    <span th:text="#{product.currency.euro}"></span>
+                                    <span data-th-text="${order.orderSumTotalOrderWithShippingAndIncludeVat}"></span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <div th:replace="common/macros :: automaticAnswer" />
+
+</body>
+</html>

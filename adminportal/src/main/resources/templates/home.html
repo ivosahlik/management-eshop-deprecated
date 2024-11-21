@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container" style="padding-top: 100px;">
+
+		<div th:each="htmlToInject : ${settingsList}">
+			<span th:utext="${htmlToInject.html}"/>
+		</div>
+	</div>
+
+
+	<!--<div class="container" style="padding-top: 100px;">-->
+
+		<!--<ul class="my-tiles">-->
+			<!--<li>-->
+				<!--<div class="my-tile">-->
+					<!--<a class="my-title-tile" th:href="${'/adminportal/product/productList'}">-->
+						<!--<img th:src="${'images/news.svg'}" />-->
+						<!--<span class="my-title-tile">Product list</span>-->
+					<!--</a>-->
+				<!--</div>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<div class="my-tile">-->
+					<!--<a class="my-title-tile" th:href="${'/adminportal/product/addProduct'}">-->
+						<!--<img th:src="${'images/text.svg'}" />-->
+						<!--<span class="my-title-tile">Add product</span>-->
+					<!--</a>-->
+				<!--</div>-->
+			<!--</li>-->
+		<!--</ul>-->
+
+	<!--</div>-->
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

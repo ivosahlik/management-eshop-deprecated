@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div class="super_container">
+
+	<div th:replace="common/header :: navbar" />
+
+	<nav id="navbar" class="main_nav">
+		<div class="container">
+			<div th:replace="common/macros :: navbarBreadcrumbMain" />
+			<div class="navbar-container">
+				<ul class="navbar-breadcrumb">
+					<li><a th:href="@{/}"><span class="icon icon-home"> </span></a></li>
+					<li><a href="#">Terms and conditions</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="container content_sticky_top" style="padding-bottom: 30px; margin-top: 30px;">
+
+		<div th:replace="termsAndConditions/conditions/obchodni_podminky_anglicky_pro_membrania.eu:: conditions-web" />
+
+	</div>
+
+</div>
+
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+</body>
+</html>

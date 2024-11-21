@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="icon" sizes="16x16" src="static/images/favicon32.png" style="height: 40px;" type="image/x-icon"/>
+
+    <title th:text="'UltraPureWater: Order id ' + ${orderId}"></title>
+
+    <style>
+        @page {
+            margin: 10mm;
+            padding: 10mm;
+            size: 210mm 297mm;
+        }
+
+        html {
+            background: white;
+            height: 100%;
+            position: relative;
+            font-size: 8pt;
+            font-family:  Arial,serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            width: 40%;
+        }
+
+        th {
+            height: 50px;
+        }
+
+        thead {
+            background-color: #77b1d7;
+        }
+
+        .comment-margin-top {
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+        }
+
+        .content-max-height {
+            line-height: 4px;
+        }
+
+        .row-max-height {
+            line-height: 6px;
+            font-size: 12px;
+        }
+
+        .subtotal-border-top {
+            padding-top: 10px;
+            border-top: 1px solid black;
+        }
+
+        .order-confirmation {
+            border: 1px solid black;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <img th:src="${image}" style="width: 250px;"/>
+                </td>
+                <td></td>
+                <td>
+                    <div class="order-confirmation" style="font-size: 16px; width: 200px;">
+                        ORDER CONFIRMATION
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <td class="content-max-height">
+                    <p style="font-weight: bold; font-size: 16px;">DC Solutions s.r.o.</p>
+                    <p class="row-max-height">Voskovocva 1075/51</p>
+                    <p class="row-max-height">152 00 PRAGUE 5, CZECH REPUBLIC</p>
+                    <p class="row-max-height"><strong>CRN:</strong> 05263247</p>
+                    <p class="row-max-height"><strong>VAT:</strong> CZ05263247</p>
+                    <p class="row-max-height"><strong>Bank account number:</strong> 100984/5500</p>
+                    <p class="row-max-height"><strong>IBAN:</strong> CZ3355000000000000100984</p>
+                    <p class="row-max-height"><strong>BIC (SWIFT):</strong> RZBCCZPP</p>
+                </td>
+                <td class="content-max-height">
+                    <p class="row-max-height">Date: <span data-th-text="${#dates.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span></p>
+                    <p class="row-max-height">No: <span data-th-text="${order.id}"></span></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <table>
+            <thead>
+            <tr>
+                <td style="font-size: 12px;"><strong>Purchaser</strong></td>
+                <td style="font-size: 12px;"><strong>Ship to</strong></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="content-max-height">
+                    <p class="row-max-height"><strong>Comany name:</strong> <span th:text="${order.billingAddress.billingAddressName}"></span></p>
+                    <p class="row-max-height"><strong>Street:</strong> <span th:text="${order.billingAddress.billingAddressStreet1}"></span></p>
+                    <p class="row-max-height"><strong>City:</strong> <span th:text="${order.billingAddress.billingAddressCity}"></span></p>
+                    <p class="row-max-height"><strong>ZIP:</strong> <span th:text="${order.billingAddress.billingAddressZipcode}"></span></p>
+                    <p class="row-max-height"><strong>State:</strong> <span th:text="${order.billingAddress.billingAddressState}"></span></p>
+                    <p class="row-max-height"><strong>VAT:</strong> <span th:text="${order.billingAddress.billingAddressVat}"></span></p>
+                    <p class="row-max-height"><strong>Phone:</strong> <span th:text="${order.billingAddress.billingAddressPhone}"></span></p>
+                </td>
+
+                <td class="content-max-height">
+                    <p class="row-max-height"><strong>Comany name:</strong> <span th:text="${order.shippingAddress.shippingAddressName}"></span></p>
+                    <p class="row-max-height"><strong>Street:</strong> <span th:text="${order.shippingAddress.shippingAddressStreet1}"></span></p>
+                    <p class="row-max-height"><strong>City:</strong> <span th:text="${order.shippingAddress.shippingAddressCity}"></span></p>
+                    <p class="row-max-height"><strong>ZIP:</strong> <span th:text="${order.shippingAddress.shippingAddressZipcode}"></span></p>
+                    <p class="row-max-height"><strong>State:</strong> <span th:text="${order.shippingAddress.shippingAddressState}"></span></p>
+                    <p class="row-max-height"><strong>VAT:</strong> <span th:text="${order.shippingAddress.shippingAddressVat}"></span></p>
+                    <p class="row-max-height"><strong>Phone:</strong> <span th:text="${order.shippingAddress.shippingAddressPhone}"></span></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <table>
+            <thead>
+            <tr>
+                <td style="font-size: 12px;"><strong>Item</strong></td>
+                <td style="font-size: 12px;"><strong>Quantity</strong></td>
+                <td style="font-size: 12px;"><strong>Unit price</strong></td>
+                <td style="font-size: 12px;padding-right: 60px;"><strong>Total</strong></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartItem : ${cartItemList}">
+                <td data-th-text="${cartItem.product.productName}"></td>
+                <td data-th-text="${cartItem.qty}"></td>
+                <td>
+                    <span th:text="#{product.currency.euro}"></span>
+                    <span data-th-text="${cartItem.product.ourPrice}"></span>
+                </td>
+                <td>
+                    <span th:text="#{product.currency.euro}"></span>
+                    <span data-th-text="${cartItem.subtotal}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="subtotal-border-top"><strong>Total Before Vat</strong></td>
+                <td class="subtotal-border-top">
+                    <span th:text="#{product.currency.euro}"></span>
+                    <span data-th-text="${order.orderTotal}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><strong>VAT(21%)</strong></td>
+                <td>
+                    <span th:text="#{product.currency.euro}"></span>
+                    <span data-th-text="${order.orderGrandTotalVat}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><strong>Shipping included (DHL)</strong></td>
+                <td>
+                    <div th:replace="common/macros :: orderShippingAndOrderGrandWidthTotal" />
+                </td>
+            </tr>
+            <tr th:if="${lessThenCrateLtc}">
+                <td></td>
+                <td></td>
+                <td><strong>Less Then crate included (Ltc):</strong></td>
+                <td>
+                    <span th:text="#{product.currency.euro}"></span>
+                    <span  th:text="${#numbers.formatDecimal(300, 1 ,2)}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><strong>Shipping weight (kg)</strong></td>
+                <td>
+                    <span data-th-text="${order.orderGrandWidthTotal}"></span>
+                    <span th:text="#{product.width.kg}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: #77b1d7;"></td>
+                <td style="background-color: #77b1d7;"></td>
+                <td style="background-color: #77b1d7;"><strong>Order Total</strong></td>
+                <td style="background-color: #77b1d7;">
+                    <span data-th-text="${order.orderSumTotalOrderWithShippingAndIncludeVat}"></span>
+                    <span th:text="#{product.currency.euro}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="comment-margin-top" style="line-height: 6px; background-color: #77b1d7; height: 70px; padding: 5px;">
+        <p style="font-size: 14px;">Comments:</p>
+        <p style="font-size: 12px;">This document is not a tax invoice.</p>
+        <p style="font-size: 12px;">The delivery date will be confirmed after the payment.</p>
+    </div>
+
+    <div class="footer" style="line-height: 6px; background-color: #77b1d7; height: 50px; padding: 5px;">
+        <p style="font-size: 14px;">DC Solutions s.r.o.</p>
+        <p style="font-size: 12px;">Adam Houdek </p>
+    </div>
+
+</div>
+
+
+</body>
+</html>
+

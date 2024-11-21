@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>Vosa Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/styles/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/styles/style.css}" rel="stylesheet"/>
+
+    <!-- data table -->
+    <link th:href="@{/styles/jquery.dataTables.min.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{/styles/font-awesome.min.css}" rel="stylesheet"/>
+
+    <!--  new version tiny mc 5	-->
+    <script src="https://cdn.tiny.cloud/1/58ccjjf7a4qqoyu1nffc5xdx3vlauuskemsof1zvvevsv7mf/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'print preview fullpage paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern noneditable help charmap emoticons textcolor colorpicker',
+            toolbar_mode: 'floating',
+            height: 300,
+        });
+    </script>
+
+    <link rel="icon" href="/images/applie-touch-icon.png"/>
+</head>
+
+<body>
+<div th:fragment="navbar" style="padding-bottom: 70px;">
+    <style>.navbar-default {
+        background-color: #337ab7;
+        border-color: #293872;
+    }
+
+    .navbar-default .navbar-brand {
+        color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-brand:hover,
+    .navbar-default .navbar-brand:focus {
+        color: #f8f9f8;
+    }
+
+    .navbar-default .navbar-text {
+        color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:focus {
+        color: #f8f9f8;
+    }
+
+    .navbar-default .navbar-nav > .active > a,
+    .navbar-default .navbar-nav > .active > a:hover,
+    .navbar-default .navbar-nav > .active > a:focus {
+        color: #f8f9f8;
+        background-color: #293872;
+    }
+
+    .navbar-default .navbar-nav > .open > a,
+    .navbar-default .navbar-nav > .open > a:hover,
+    .navbar-default .navbar-nav > .open > a:focus {
+        color: #f8f9f8;
+        background-color: #293872;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-color: #293872;
+    }
+
+    .navbar-default .navbar-toggle:hover,
+    .navbar-default .navbar-toggle:focus {
+        background-color: #293872;
+    }
+
+    .navbar-default .navbar-toggle .icon-bar {
+        background-color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-collapse,
+    .navbar-default .navbar-form {
+        border-color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-link {
+        color: #ecf0f1;
+    }
+
+    .navbar-default .navbar-link:hover {
+        color: #f8f9f8;
+    }
+
+    @media (max-width: 767px) {
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+            color: #ecf0f1;
+        }
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+            color: #f8f9f8;
+        }
+
+        .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+        .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+        .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+            color: #f8f9f8;
+            background-color: #293872;
+        }
+
+    }
+
+    #frmlogout {
+        display: inline;
+    }
+
+    </style>
+    <nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">Admin Portal</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown" th:if="${testEnabled}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Test interceptor<span class="caret"></span></a>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'category' ? 'active' : ''}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/category/categoryList}">Category list</a></li>
+                            <li><a th:href="@{/category/addCategory}">Add category</a></li>
+                            <!--								<li><a th:href="@{/support/list}">Support List</a></li>-->
+                        </ul>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'subCategory' ? 'active' : ''}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SubCategory <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/subCategory/subCategoryList}">SubCategory list</a></li>
+                            <li><a th:href="@{/subCategory/addSubCategory}">Add subcategory</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'type' ? 'active' : ''}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Type <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/type/typeList}">Type list</a></li>
+                            <li><a th:href="@{/type/addType}">Add type</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'product' ? 'active' : ''}"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                                                                   aria-expanded="false">Products <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/product/productList}">Product list</a></li>
+                            <li><a th:href="@{/product/addProduct}">Add Product</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'requestPricing' ? 'active' : ''}"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                                                                          aria-expanded="false">Quotes <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/getAQoute}">Get a quotes</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'transport' ? 'active' : ''}"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                                                                     aria-expanded="false">Transport DHL <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/transport/transportList}">Transport list</a></li>
+                            <li><a th:href="@{/transport/transportTariffZoneList}">Transport Tariff Zone list</a></li>
+                            <li><a th:href="@{/transport/addTransport}">Add transport</a></li>
+                            <li><a th:href="@{/transport/addTariffZone}">Add tariff zone</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" th:class="${currentPage eq 'countries' ? 'active' : ''}"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                                                                     aria-expanded="false">Countries <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/countries/list}">Countries list</a></li>
+                        </ul>
+                    </li>
+<!--                    <li class="dropdown" th:class="${currentPage eq 'order' ? 'active' : ''}"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"-->
+<!--                                                                                                 aria-expanded="false">Orders <span class="caret"></span></a>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li><a th:href="@{/orderlist}">Orders List</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" th:class="${currentPage eq 'settings' ? 'active' : ''}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/settings}">HomePage Settings</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="navbar-text navbar-right" style="padding-right: 10px;">
+                    Welcome <span sec:authentication="name">Guest</span> |
+                    <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
+                        <a href="javascript:{}" style="color: #ecf0f1" onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
+                    </form>
+                </div>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</div>
+
+<div th:fragment="body-bottom-scripts">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootbox.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:src="@{/js/upload.js}"></script>
+
+    <!-- Modules -->
+    <script th:src="@{/js/modules/category.js}"></script>
+    <script th:src="@{/js/modules/countries.js}"></script>
+
+
+    <!-- Datatables Js-->
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+    <!--<script type="text/javascript" src="//cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>-->
+
+    <!-- jQuery UI -->
+    <script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</div>
+</body>
+</html>

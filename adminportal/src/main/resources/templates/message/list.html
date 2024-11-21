@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+
+		<div th:replace="common/macros :: verticalNavigation" />
+
+		<div class="col-sm-9">
+			<legend class="center-block">
+				List of Message
+			</legend>
+
+			<div class="table-responsive">
+
+				<a class="btn btn-primary" th:href="@{/settings/message/add}">add</a>
+
+				<table id="categoryListTable" class="table table-bordered table-hover table-striped">
+					<thead>
+						<tr>
+							<th><input th:id="selectAll" type="checkbox" /></th>
+							<th>Title</th>
+							<th>Text Message</th>
+							<th>Show Alert</th>
+							<th>Active?</th>
+							<th>Background Color</th>
+							<th>Color</th>
+							<th>Font Weight</th>
+							<th>Font Size (px)</th>
+							<th>App</th>
+							<th>Operation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="message : ${messagesList}">
+							<td>
+								<input hidden="hidden" name="id" th:value="${message.messageId}" />
+								<input th:id="'selected'+${message.messageId}" class="checkboxData" type="checkbox" />
+							</td>
+							<td><a th:href="@{/settings/message/info(id=${message.messageId})}"><span th:text="${message.title}"></span></a></td>
+<!--							<td><span th:text="${#strings.substring(message.textMessage,0,30)}  "></span></td>-->
+							<td><span th:text="${message.textMessage}"></span></td>
+
+
+							<td th:text="${message.showAlert}"></td>
+							<td th:text="${message.active}"></td>
+
+							<td><span class="badge badge-pill badge-danger" th:style="'background-color:'+@{${message.backgroundColor}}+''" th:text="${message.backgroundColor}"></span></td>
+							<td><span class="badge badge-pill badge-danger" th:style="'color:'+@{${message.color}}+''"  th:text="${message.color}"></span></td>
+							<td><span class="badge badge-pill badge-danger" th:text="${message.fontWeight}"></span></td>
+							<td><span class="badge badge-pill badge-danger" th:text="${message.fontSize}"></span></td>
+
+							<td><span class="badge badge-pill badge-danger" th:text="${message.app}"></span></td>
+							<td>
+								<input hidden="hidden" name="id" th:value="${message.messageId}" />
+								<button th:id="'oneMessage-'+${message.messageId}" class="btn btn-danger btn-xs delete-product" type="submit" value="delete" >
+									<span class="fa fa-times"></span>
+									Delete
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	<button th:id="deleteSelected" class="btn btn-danger">Delete Selected</button>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+
+	<script>
+		$(document).ready(function() {
+			$("#categoryListTable").DataTable({
+				"lengthMenu": [[5,10,15,20,-1],[5,10,15,20,"All"]],
+				"ordering": false,
+				stateSave: true
+			});
+		});
+	</script>
+</body>
+</html>

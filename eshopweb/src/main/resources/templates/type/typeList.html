@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div class="super_container">
+
+	<div th:replace="common/header :: navbar" />
+
+	<!-- Main Navigation -->
+	<nav id="navbar" class="main_nav">
+		<div class="container">
+			<div th:replace="common/macros :: navbarBreadcrumb" />
+		</div>
+	</nav>
+	<div class="container content_sticky_top" style="padding-bottom: 30px;">
+		<div class="row" style="margin-top: 60px;">
+
+			<div style="margin-top: 30px;">
+
+				<table id="datatable">
+					<thead>
+					<tr>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr data-th-each="type : ${typeList}" >
+						<td>
+							<div class="container" th:if="${type != null}">
+
+								<div class="row" style="margin-bottom: 30px; border: 1px solid #f2f2f2;" th:with="productLink=${linkToProducts} + ${type.typeTitlePath}">
+
+									<div th:if="${type.originalFileName != null}" class="col-sm" style="margin-left: -15px;">
+										<a th:href="${productLink}">
+											<img th:src="@{/api/displayTypeImage/}+${type.id}+'.png'"
+												 class=" img-responsive center-block image_size" alt="..." />
+										</a>
+									</div>
+									<div th:if="${type.originalFileName == null}" class="col-sm" style="margin-left: -15px;">
+										<a th:href="${productLink}">
+											<img th:src="@{/images/emptyimg.png}" style="height: 200px;" alt=""/>
+										</a>
+									</div>
+
+									<div class="col-sm-8" style="width: 900px; margin-top: 15px;">
+										<a th:href="${productLink}">
+											<h5 class="card-title" th:text="${type.title}"></h5>
+										</a>
+										<p>
+											<span class="card-text" th:utext="${type.description}"></span>
+										</p>
+									</div>
+
+								</div>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- Newsletter -->
+	<div th:replace="common/macros :: newsletter" />
+
+</div>
+
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+<script>
+
+	$(document).ready(function() {
+
+		$('#datatable').DataTable({
+			"lengthMenu":[[5,10,15,20,-1],[5,10,15,20,"All"]],
+			"ordering":false,
+			stateSave:true
+		}).on('page.dt', function() {
+			$('html, body').animate({
+				scrollTop: $('#datatable').offset().top
+			}, 200);
+		});
+
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eshop-dcsolutions-web-application
+  labels:
+    app: eshop-dcsolutions-web-application
+spec:
+  selector:
+    app: eshop-dcsolutions-web-application
+  ports:
+    - name: http
+      port: 8086
+      targetPort: 8080
+  type: LoadBalancer
+---
+# HTTPS ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-amivos.com
+  labels:
+    name: ingress-amivos.com
+  namespace: web2-cz-dev
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-amivos.com
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/preserve-host: "true"
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    traefik.ingress.kubernetes.io/redirect-regex: "^https://www.amivos.com/(.*)"
+    traefik.ingress.kubernetes.io/redirect-replacement: "https://amivos.com/$1"
+spec:
+  rules:
+    - host: amivos.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: eshop-dcsolutions-web-application
+                port:
+                  number: 8086
+    - host: www.amivos.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: eshop-dcsolutions-web-application
+                port:
+                  number: 8086
+  tls:
+    - hosts:
+        - amivos.com
+        - www.amivos.com
+      secretName: amivos.com.info-tls
+#---
+## Redirect to https
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: Middleware
+#metadata:
+#  name: redirect-https
+#spec:
+#  redirectScheme:
+#    scheme: https
+#    permanent: true
+---
+# http ingress for http->https redirection
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ingress-amivos.com-redirect
+  namespace: web2-cz-dev
+  annotations:
+    # https://aqibrahman.com/set-up-traefik-kubernetes-ingress-for-http-and-https-with-redirect-to-https
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: web2-cz-dev-redirect-https@kubernetescrd
+spec:
+  rules:
+    - host: amivos.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: eshop-dcsolutions-web-application
+                port:
+                  number: 8086
+    - host: www.amivos.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: eshop-dcsolutions-web-application
+                port:
+                  number: 8086

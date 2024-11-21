@@ -1,0 +1,58 @@
+@page {
+    margin: 10mm;
+    padding: 10mm;
+    size: 210mm 297mm;
+}
+
+html {
+    background: white;
+    height: 100%;
+    position: relative;
+    font-size: 8pt;
+    font-family:  Arial;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    width: 33%;
+}
+
+th {
+    height: 50px;
+}
+
+thead {
+    background-color: #0d82d3;
+}
+
+.comment-margin-top {
+    margin-top: 100px;
+}
+
+.footer {
+    margin-top: 100px;
+}
+
+.content-max-height {
+    line-height: 6px;
+}
+
+.subtotal-border-top {
+    padding-top: 10px;
+    border-top: 1px solid black;
+}
+
+.order-confirmation {
+    border: 1px solid black;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+
+

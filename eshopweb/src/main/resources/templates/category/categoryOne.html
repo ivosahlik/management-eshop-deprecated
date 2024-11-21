@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div class="super_container">
+
+	<div th:replace="common/header :: navbar" />
+
+	<nav id="navbar" class="main_nav">
+		<div class="container">
+			<div th:replace="common/macros :: navbarBreadcrumbMain" />
+			<div class="navbar-container">
+				<ul class="navbar-breadcrumb">
+					<li><a th:href="@{/}"><span class="icon icon-home"> </span></a></li>
+					<li><a href="#"><span th:text="${category.title}"></span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container content_sticky_top" style="margin-top: 70px; padding-bottom: 100px;">
+
+		<p th:if="${category != null}" th:utext="${category.description}"></p>
+
+	</div>
+
+</div>
+
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+</body>
+</html>

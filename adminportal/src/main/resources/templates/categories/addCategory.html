@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+
+			<div class="alert alert-danger" role="alert" th:if="${message}">
+				<h2 th:text="${message}"/>
+			</div>
+
+			<form class="form-horizontal" th:object="${category}" th:action="@{/category/addCategory}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						New Category<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Title</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${category.title}" required="required" placeholder="Title" />
+							<span class="help-block">Title of the category</span>
+						</div>
+					</div>
+
+					<!-- language -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="language">Language</label>
+						<div class="col-md-8">
+							<select th:value="${category.language}" id="language" name="language"
+								class="form-control">
+								<option value="czech">Czech</option>
+								<option value="english">English</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- main navigation -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="mainNavigation">Show category in main navigation</label>
+						<div class="col-md-8">
+							<label>
+								<input value="true" type="radio" name="mainNavigation" id="mainNavigation" />Active
+							</label>
+							<label><input value="false" type="radio" name="mainNavigation" checked="checked"/>Inactive </label>
+							<span class="help-block">Whether the main navigation is active or inactive</span>
+						</div>
+					</div>
+
+					<!-- status of category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="active">Status</label>
+						<div class="col-md-8">
+							<label>
+								<input value="true" type="radio" name="active" id="active" />Active
+							</label>
+							<label><input value="false" type="radio" name="active" checked="checked" />Inactive </label>
+							<span class="help-block">Whether the category is active or inactive</span>
+						</div>
+					</div>
+
+					<!-- apps of category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label">Apps - DC Solutions/ Membrania</label>
+						<div class="col-md-8">
+							<input type="checkbox" name="apps" value="dcsolutions" class="form-check-input" id="app1dcsolution" th:checked="${dcsolutions}"/>
+							<label class="form-check-label" for="app1dcsolution">app1 - Dc Solution</label>
+							<input type="checkbox" name="apps" value="membrania" class="form-check-input" id="app2membrania" th:checked="${membrania}"/>
+							<label class="form-check-label" for="app2membrania">app2 - Membrania</label>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Description</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${category.description}"
+								placeholder="Description" />
+							<span class="help-block">Description of the category</span>
+						</div>
+					</div>
+
+					<!-- upload images -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="file">Upload category image</label>
+						</div>
+						<div class="col-md-8">
+							<input id="file" type="file" name="file"
+								   th:value="${category.image}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Add Category</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

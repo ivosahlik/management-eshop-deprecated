@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: membrania.eu
+#  namespace: web2-cz-prod
+spec:
+  secretName: membrania.eu.info-tls
+  issuerRef:
+    name: letsencrypt-membrania.eu
+    kind: ClusterIssuer
+  commonName: membrania.eu
+  dnsNames:
+    - membrania.eu

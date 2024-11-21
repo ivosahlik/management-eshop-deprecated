@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header"/>
+
+<body>
+<!--<div th:replace="common/header :: navbar"/>-->
+
+<div class="super_container">
+
+	<div th:replace="common/header :: navbar"/>
+
+	<!-- Main Navigation -->
+	<nav id="navbar" class="main_nav">
+		<div class="container">
+			<div th:replace="common/macros :: navbarBreadcrumb" />
+		</div>
+	</nav>
+
+	<div class="content_sticky_top">
+		<form th:action="@{/shoppingCart/addItem}" method="post">
+
+			<input hidden="hidden" th:field="*{product.id}" />
+			<input hidden="hidden" name="urlForward" th:value="${urlForward}" />
+
+			<!-- Single Product -->
+			<div class="single_product" style="margin-top: 60px;">
+				<div class="container">
+
+					<div class="row col-12" style="margin-top: 30px;">
+
+						<div class="col-3">
+							<img th:src="@{/api/displayProductImage/}+${product.id}+'.png'" class="img-responsive center-block image_size_small" />
+						</div>
+
+						<div class="col-9">
+							<h3><span th:if="${addProductSuccess}" style="color: forestgreen">
+								<i class="fa fa-check" aria-hidden="true" style="color: forestgreen">
+									<a style="color: forestgreen" th:href="@{/shoppingCart/cart}"> Added to cart.</a>
+								</i>
+							</span>
+							</h3>
+							<h3><span th:if="${notEnoughStock}" style="color: red">Oops, only <span th:text="${product.inStockNumber}"></span> In Stock.</span></h3>
+							<div th:if="${isQtyEqualsZero}" class="alert alert-warning" role="alert">
+								<span><i class="fa fa-check" aria-hidden="true" style="color: forestgreen"></i> You have to add more quantity! </span>
+							</div>
+							<div th:if="${isQtyEqualsNullOrEmpty}" class="alert alert-warning" role="alert">
+								<span><i class="fa fa-check" aria-hidden="true" style="color: forestgreen"></i> Quantity is NULL or EMPTY! </span>
+							</div>
+
+							<div class="row" style="margin-bottom: 30px;">
+								<div class="col-10">
+									<h3 th:text="${product.productName}">Product Title</h3>
+									<div class="panel panel-default" style="border-width: 5px; margin-top: 20px;">
+										<div class="panel-body">
+											<div class="row">
+
+												<div class="col-sm-5">
+													<div th:if="${product.displayPrice and app}">
+														<div th:replace="common/macros :: productBlock" />
+													</div>
+												</div>
+
+												<div class="col-sm-4">
+													<div>
+														<h4 th:if="*{product.inStockNumber&gt;10 or product.inStockNumber==10}" th:text="#{product.in.stock}" style="color: green"></h4>
+														<h4 th:if="*{product.inStockNumber&lt;10 and product.inStockNumber&gt;0}"
+                                                            th:text="#{product.only.number.in.stock(${product.inStockNumber})}" style="color: green"></h4>
+														<!--<h4 th:if="*{product.inStockNumber==0}" th:text="#{product.out.of.stock}" style="color:darkred;"></h4>-->
+
+														<span class="badge badge-pill badge-danger" th:if="*{product.estimatedDelivery != ''}" th:text="${product.estimatedDelivery}"></span>
+
+													</div>
+
+													<div th:if="${product.displayPrice and app}" style="margin-top: 20px;">
+														<div th:replace="common/macros :: productQtyBlock"/>
+													</div>
+												</div>
+
+												<div class="col-sm-3">
+													<div class="row">
+														<div class="col-sm-6">
+															<button th:if="${product.addToCart and app}" type="submit" class="btn btn-warning">Add to Cart</button>
+														</div>
+														<div style="margin-right: 1px;" class="col-sm-6">
+															<button th:if="${product.getAQuote}" th:id="'product-'+${product.id}" style="background-color: #0e8ce4;cursor: pointer;" type="button" class="btn btn-primary btn-sm get-a-quote">
+																Get a quote
+															</button>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<hr/>
+							<p th:utext="${product.productDescription}"></p>
+
+							<hr/>
+
+							<div class="row">
+								<div style="width: 600px;">
+									<ul>
+										<li th:each="key : ${mapPdfs.keySet()}" th:onclick="|getPdfContent('${mapPdfs.get(key)}')|"
+											style="padding-bottom: 5px; cursor: pointer;">
+											<img data-toggle="tooltip"
+												 data-placement="top"
+												 th:title="${key}"
+												 style="width: 50px;"
+												 th:src="@{/images/pdf-icon.jpg}"/>
+											<span th:text="${key}"></span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+</body>
+</html>

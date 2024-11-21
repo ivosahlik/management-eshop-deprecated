@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+<div th:replace="common/header :: navbar" />
+
+<div class="container">
+
+	<a th:href="@{/support/add}"><button class="btn btn-primary btn-xs">Add Support</button></a>
+
+
+	<legend class="center-block">
+		List of Support (displayed support is only one active row!)
+	</legend>
+
+	<div class="table-responsive" style="margin-top: 40px;">
+		<table id="categoryListTable" class="table table-bordered table-hover table-striped">
+			<thead>
+			<tr>
+				<th><input th:id="selectAll" type="checkbox" /></th>
+				<th>Title</th>
+				<th>Active?</th>
+				<th>Created</th>
+				<th>Apps</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="support : ${supportList}">
+				<td>
+					<input hidden="hidden" name="id" th:value="${support.id}" />
+					<input th:id="'selected'+${support.id}" class="checkboxData" type="checkbox" />
+				</td>
+				<td><a th:href="@{/support/info/{id}(id = ${support.id})}"><span th:text="${support.title}"></span></a></td>
+				<td th:text="${support.active}"></td>
+				<td th:text="${support.created}"></td>
+				<td><span class="badge badge-pill badge-danger" th:text="${support.app}"></span></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+<script>
+	$(document).ready(function() {
+		$("#categoryListTable").DataTable({
+			"lengthMenu": [[5,10,15,20,-1],[5,10,15,20,"All"]],
+			"ordering": false,
+			stateSave: true
+		});
+	});
+</script>
+</body>
+</html>

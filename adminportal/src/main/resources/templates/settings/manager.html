@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+<div th:replace="common/header :: navbar" />
+
+<div class="container">
+
+    <div th:replace="common/macros :: verticalNavigation" />
+
+    <div>
+        <p>Manager</p>
+    </div>
+
+    <div>
+        <span th:text="|Hello ${name}|"/>, did you know that <span th:utext="${formatted}"/> is <span th:text="${formatted}"/> in HTML?
+    </div>
+
+    <div class="container" style="padding-top: 100px;">
+        <span th:utext="${htmlToInject}"/>
+    </div>
+
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

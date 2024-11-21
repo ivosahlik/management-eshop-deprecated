@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+	
+	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/subCategory/subCategoryList}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Go back</a></li>
+				<li><a th:href="@{/subCategory/updateSubCategory?id=}+${subCategory.id}">Edit</a></li>
+			</ol>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="panel panel-default">
+				<div class="panel-body">
+					<img th:src="@{/subCategory/imageDisplays/}+${subCategory.id}+'.png'" class="img-responsive center-block" />
+				</div>
+				</div>
+			</div>
+			<div class="col-xs-9">
+				<h3 th:text="${subCategory.title}"></h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<p><strong>active: </strong><span th:text="${subCategory.active}"></span></p>
+					</div>
+					<div class="col-xs-6">
+						<p><strong>created: </strong><span th:text="${subCategory.created}"></span></p>
+						<p><strong>userCreated: </strong><span th:text="${subCategory.userCreated}"></span></p>
+
+						<p><strong>updated: </strong><span th:text="${subCategory.updated}"></span></p>
+						<p><strong>userUpdated: </strong><span th:text="${subCategory.userUpdated}"></span></p>
+
+					</div>
+				</div>
+
+				<hr/>
+				<p><Strong>Description: </Strong><span th:utext="${subCategory.description}"></span></p>
+
+				<hr/>
+				<p><Strong>Image: </Strong></p>
+				<p><Strong>original File Name: </Strong><span th:utext="${subCategory.originalFileName}"></span></p>
+				<p><Strong>content Type: </Strong><span th:utext="${subCategory.contentType}"></span></p>
+				<p><Strong>image size: </Strong><span th:utext="${subCategory.size}"></span> Kb</p>
+
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

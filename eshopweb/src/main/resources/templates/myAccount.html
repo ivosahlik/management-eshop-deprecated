@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+    <div class="super_container">
+
+        <div th:replace="common/header :: navbar" />
+
+
+        <div class="container" style="padding-bottom: 30px;">
+
+            <div th:if="${message}" class="container alert alert-danger container" role="alert">
+                <h5 th:text="${message}"></h5>
+            </div>
+
+            <div th:if="${captchaVerifyMessage}" class="container alert alert-danger container" role="alert">
+                <h5 th:text="${captchaVerifyMessage}"></h5>
+            </div>
+
+            <div th:if="${validEmailAddressRegex}" class="container alert alert-danger container" role="alert">
+                <h5>Email is not valid!</h5>
+            </div>
+
+            <div class="row" style="margin-top: 30px;">
+
+                <div class="col-md-6" th:if="${showLogin}">
+
+                    <h2 class="section-headline">
+                        <span>User Account</span>
+                    </h2>
+
+                    <div th:if="${param.error != null}" style="color:red;">Incorrect username or password.</div>
+                    <form th:action="@{/login}" method="post">
+                        <div class="form-group">
+                            <label for="username">* Username: </label> <input
+                                required="required" type="text" class="form-control"
+                                id="username" name="username" />
+                            <p style="color: #828282">Enter your username here.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">* Password: </label> <input
+                                required="required" type="password" class="form-control"
+                                id="password" name="password" />
+                            <p style="color: #828282">Enter the password that accompanies your username</p>
+                        </div>
+
+                        <p>
+                            <a th:href="@{/forgetPassword}">Forget password</a> | <a th:href="@{/newUserAccount}">Create new user</a>
+                        </p>
+
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </form>
+                </div>
+
+                <div class="col-md-6" th:if="${showForgetPassword}">
+
+                    <h2 class="section-headline">
+                        <span>Forget Password</span>
+                    </h2>
+
+                    <div th:if="${param.error != null}" style="color:red;">Incorrect username or password.</div>
+                    <div th:if="${emailNotExist}" class="alert alert-danger">Email doesn't exist.</div>
+                    <div th:if="${forgetPasswordEmailSent}" class="alert alert-success">Email sent.</div>
+                    <form th:action="@{/forgetPassword}" method="post">
+                        <div class="form-group">
+                            <label for="recoverEmail">* Your Email: </label>
+                            <input required="required" type="text" class="form-control" id="recoverEmail" name="email" />
+                            <p style="color: #828282">Enter your registered email address here.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.getKey()}"></div>
+                        </div>
+
+                        <p>
+                            <a th:href="@{/login}">Login</a> | <a th:href="@{/newUserAccount}">Create new user</a>
+                        </p>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <div class="col-md-6" th:if="${showNewUserAccount}">
+
+                    <h2 class="section-headline">
+                        <span>Create New User</span>
+                    </h2>
+
+                    <div class="alert alert-info" th:if="${emailSent}">An
+                        email has been sent to the email address you just registered.
+                        Please validate your email address and update your password
+                        information.
+                    </div>
+                    <form th:action="@{/newUser}" method="post">
+                        <div class="form-group">
+                            <label for="newUsername">* Username: </label>&nbsp;
+                            <span style="color: red;" th:if="${usernameExists}">Username already exists. Choose a different one.</span>
+                            <input required="required" type="text" class="form-control" id="newUsername" name="username" />
+                            <p style="color: #828282">Enter your username here.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">* Email Address: </label>
+                            <span style="color: red;" th:if="${emailExists}">Email already exists. Choose a different one.</span>
+                            <input required="required" type="text" class="form-control" id="email" name="email" />
+                            <p style="color: #828282">
+                                A valid email address. All
+                                emails from the system withll be sent to this address. The
+                                email address is not made public and will only be used if
+                                you wish to receive a new password or wish to receive
+                                certain notification.
+                            </p>
+                        </div>
+
+                        <p>
+                            <a th:href="@{/forgetPassword}">Forget password</a>
+                        </p>
+
+                        <div class="form-group">
+                            <div class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.getKey()}"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Create new account</button>
+                    </form>
+                </div>
+            </div>
+		</div>
+	</div>
+
+    <div th:replace="common/header :: footer"/>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: admin.membrania.eu
+  namespace: web2-cz-prod
+spec:
+  secretName: admin.membrania.eu.info-tls
+  issuerRef:
+    name: letsencrypt-admin.membrania.eu
+    kind: ClusterIssuer
+  commonName: admin.membrania.eu
+  dnsNames:
+    - admin.membrania.eu

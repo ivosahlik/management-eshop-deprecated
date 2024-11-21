@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header"/>
+
+<body>
+
+<div class="super_container">
+
+    <div th:replace="common/header :: navbar"/>
+
+    <!-- Main Navigation -->
+    <nav id="navbar" class="main_nav">
+        <div id="navbar_navbar" class="container">
+            <div th:replace="common/macros :: navbarBreadcrumbMain" />
+            <div class="navbar-container">
+                <ul class="navbar-breadcrumb">
+                    <li><a th:href="@{/}"><span class="icon icon-home"> </span></a></li>
+                    <li><a href="#">All</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container content_sticky_top" style="padding-bottom: 30px;">
+        <div class="row" style="margin-top: 60px;">
+
+            <div th:if="${emptyList}" class="container alert alert-primary container" role="alert">
+                <h5>Oops, no result is found. Try something else or try again later.</h5>
+            </div>
+
+            <div style="margin-top: 30px;">
+
+                <div th:if="${addProductSuccess}" class="alert alert-primary" role="alert">
+                    <span>
+                        <i class="fa fa-check" aria-hidden="true">
+                            <a style="color: forestgreen" th:href="@{/shoppingCart/cart}"> Added to cart.</a>
+                        </i>
+                    </span>
+                </div>
+
+                <div th:if="${isQtyEqualsZero}" class="alert alert-warning" role="alert">
+                    <span><i class="fa fa-check" aria-hidden="true" style="color: forestgreen"></i> You have to add more quantity! </span>
+                </div>
+
+                <div th:if="${isQtyEqualsNullOrEmpty}" class="alert alert-warning" role="alert">
+                    <span><i class="fa fa-check" aria-hidden="true" style="color: forestgreen"></i> Quantity is NULL or EMPTY! </span>
+                </div>
+
+                <h3><span th:if="${notEnoughStock}" style="color: red">Oops, only <span th:text="${product.inStockNumber}"></span> In Stock.</span></h3>
+
+                <table id="datatable" th:if="!${emptyList}">
+                    <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-th-each="product : ${productList}">
+                        <td>
+                            <div th:if="${product != null}">
+                                <form th:action="@{/shoppingCart/addItem?productId=} + ${product.id}" method="post">
+
+                                    <input hidden="hidden" name="urlForward" th:value="${urlForward}"/>
+
+                                    <div class="container">
+                                        <div class="row" style="margin-bottom: 30px; border: 1px solid #f2f2f2; background-color: #fafafa;"
+                                             th:with="linkToProductDetail = ${linkToProductDetail} + ${product.productNamePath}">
+
+                                            <div class="col-sm-3" style="padding-right: 130px; padding-left: 0px;">
+                                                <a th:href="@{/category/} + ${product.categoryTitlePath} +
+																@{/subCategory/} + ${product.subCategorytitlePath} +
+																@{/type/} + ${product.typeTitlePath} +
+																@{/product/} + ${product.productNamePath}">
+                                                    <img th:src="@{/api/displayProductImage/}+${product.id}+'.png'"
+                                                         class=" img-responsive center-block image_size" alt="..."/>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-sm-3" style="margin-top: 5px; width: 600px;">
+                                                <a th:href="@{/category/} + ${product.categoryTitlePath} +
+																@{/subCategory/} + ${product.subCategorytitlePath} +
+																@{/type/} + ${product.typeTitlePath} +
+																@{/product/} + ${product.productNamePath}">
+                                                    <h5 class="card-title" th:text="${product.productName}"></h5>
+                                                </a>
+                                                <p>
+                                                    Type: <span class="card-text" th:utext="${product.type}"></span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-sm-3" style="margin-top: 5px; margin-right: 0px;">
+                                                <div th:if="${product.displayPrice and app}">
+                                                    <div th:replace="common/macros :: productBlock" />
+                                                    <div th:replace="common/macros :: productQtyBlock" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3" style="margin-top: 5px; margin-right: 0px;">
+                                                <h4 th:if="*{product.inStockNumber&gt;10 or product.inStockNumber==10}" th:text="#{product.in.stock}" style="color: green"></h4>
+                                                <h4 th:if="*{product.inStockNumber&lt;10 and product.inStockNumber&gt;0}"
+                                                    th:text="#{product.only.number.in.stock(${product.inStockNumber})}" style="color: green"></h4>
+                                                <!--<h4 th:if="*{product.inStockNumber==0}" th:text="#{product.out.of.stock}" style="color:darkred;"></h4>-->
+
+                                                <span class="badge badge-pill badge-danger" th:if="*{product.estimatedDelivery != ''}" th:text="${product.estimatedDelivery}"></span>
+
+                                                <div style="margin-top: 50px;">
+                                                    <button th:if="${(product.addToCart and product.inStockNumber!=0) and app}" type="submit" class="btn btn-warning btn-sm">Add to Cart</button>
+                                                    <button th:if="${product.getAQuote}" th:id="'product-'+${product.id}" style="background-color: #0e8ce4;cursor: pointer;" type="button"
+                                                            class="btn btn-primary btn-sm get-a-quote">Get a quote
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div th:replace="common/macros :: newsletter" />
+
+</div>
+
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#datatable').DataTable({
+            "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+            "ordering": false,
+            stateSave: true
+        }).on('page.dt', function () {
+            $('html, body').animate({
+                scrollTop: $('#datatable').offset().top
+            }, 200);
+        });
+
+    });
+</script>
+
+</body>
+</html>

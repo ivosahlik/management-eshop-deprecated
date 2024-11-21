@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="super_container">
+
+		<!-- Main Navigation -->
+		<nav class="main_nav">
+			<div class="container">
+				<div th:replace="common/macros :: navbarBreadcrumbMain" />
+			</div>
+		</nav>
+
+		<!-- Menu underline -->
+		<div class="menu_underline"></div>
+
+		<!-- Banner -->
+		<div th:replace="common/banners :: banner" />
+
+		<!-- Latest Reviews -->
+		<div th:replace="common/banners :: reviews(banner=${banner1})" />
+
+		<!-- Latest Reviews -->
+		<div th:replace="common/banners :: reviews(banner=${banner2})" />
+
+		<!-- Recently viewed -->
+		<div th:replace="common/banners :: recentlyViewed(banner=${banner3})" />
+
+<!--		&lt;!&ndash; Brands &ndash;&gt;-->
+<!--		<div th:replace="common/Banners :: brands" />-->
+
+		<!-- Trends -->
+		<div th:replace="common/banners :: trends" />
+
+		<!-- Allowed Regions -->
+<!--		<div th:replace="common/banners :: regions" />-->
+
+<!--		&lt;!&ndash; Adverts &ndash;&gt;-->
+<!--		<div th:replace="common/Banners :: adverts" />-->
+
+<!--		&lt;!&ndash; Popular Categories Slider &ndash;&gt;-->
+<!--		<div th:replace="common/Banners :: popularCategories" />-->
+
+<!--		&lt;!&ndash; Characteristics &ndash;&gt;-->
+<!--		<div th:replace="common/Banners :: characteristics" />-->
+
+	</div>
+
+	<script>
+		$('.carousel').carousel({
+			interval: 2000
+		})
+	</script>
+
+	<div th:replace="common/header :: footer"/>
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

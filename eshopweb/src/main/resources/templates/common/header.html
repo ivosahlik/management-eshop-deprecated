@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:fragment="common-header">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<meta name="google-site-verification" content="ciIfR2osARXejACMazqT8BFzQPYv-dmddGAvd0G7ayI" />
+
+	<link rel="icon" sizes="16x16" th:href="@{/favicon}" type="image/x-icon"/>
+	<base href="/"/>
+
+	<title th:text="${appText}"></title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/bootstrap4/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/banners.css}"/>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/product_responsive.css}"/>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css}"/>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/datatables.min.css}"/>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/navbar.css}"/>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"/>
+
+	<!--	OwlCarousel2-2.2.1-->
+	<link rel="stylesheet" type="text/css" th:href="@{/plugins/OwlCarousel2-2.2.1/owl-carousel.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/plugins/OwlCarousel2-2.2.1/owl-theme-default.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/plugins/OwlCarousel2-2.2.1/animate.css}"/>
+
+	<link rel="stylesheet" type="text/css" href="plugins/slick-1.8.0/slick.css"/>
+
+	<!-- Global site tag (gtag.js) - Google Ads: 749255635 -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<!-- Event snippet for Merchant Hydranautics - pristupy conversion page -->
+	<script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-138944686-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-138944686-1');
+		gtag('config', 'AW-749255635')
+		gtag('event', 'conversion', { 'send_to': 'AW-749255635/TvM2COv8kIUDENP3ouUC', 'value': 100.0, 'currency': 'CZK' });
+	</script>
+
+</head>
+
+<body>
+	<div th:fragment="navbar">
+		<!-- Header -->
+		<header class="header">
+
+			<div th:each="message:${messages}" th:if="${message.showAlert}" th:style="'
+				background-color: '+${message.backgroundColor}+';
+				color: '+${message.color}+';
+				font-weight: '+${message.fontWeight}+';
+				z-index: 999;
+				width: 100%;
+				position: sticky;
+  				top: 0;
+				font-size:'+${message.fontSize}+'px;
+			'">
+				<div style="margin-left: 15px;margin-right: 15px;">
+					<span th:text="${message.textMessage}"></span>
+				</div>
+			</div>
+
+			<!-- Top Bar -->
+			<div class="top_bar">
+				<div class="container">
+					<div class="row">
+						<div class="col d-flex flex-row">
+							<!--<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="/images/phone.png" alt=""/>+111 111 111 111</div></div>-->
+							<!--<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="/images/mail.png" alt=""/></div><a href="mailto:test.test.jr@test.com">test.test@test.com</a></div>-->
+							<div class="top_bar_content ml-auto">
+								<!--<div class="top_bar_menu">-->
+									<!--<ul class="standard_dropdown top_bar_dropdown">-->
+										<!--<li>-->
+											<!--<a href="#">English<i class="fas fa-chevron-down"></i></a>-->
+										<!--</li>-->
+										<!--<li>-->
+											<!--<a href="#">Czech<i class="fas fa-chevron-down"></i></a>-->
+										<!--</li>-->
+									<!--</ul>-->
+								<!--</div>-->
+								<div class="top_bar_user">
+									<div class="user_icon"><img src="/images/user.svg" alt=""/></div>
+									<div sec:authorize="!isAuthenticated()">
+                                        <a th:href="@{/newUserAccount}">Register</a>
+                                    </div>
+									<div>
+										<form sec:authorize="!isAuthenticated()">
+											<a th:href="@{/login}">Sign in</a>
+										</form>
+                                        <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
+											<a>Welcome </a>&nbsp;<a th:href="@{/myProfile}" style="font-weight: bold; cursor: pointer;" sec:authentication="name">Guest</a>&nbsp;|&nbsp;
+											<a href="javascript:{}" style="color: #000000" onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
+                                        </form>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Header Main -->
+
+		<div class="header_main">
+			<div class="container">
+				<div class="row">
+
+					<!-- Logo -->
+					<div class="col-lg-4 col-sm-3 col-3 order-1">
+						<div class="logo_container">
+							<div class="logo">
+								<a th:href="@{/}" th:if="${app == true}">
+									<img th:src="@{/images/membranialogo.png}" style="height: 80px;" alt=""/>
+								</a>
+								<a th:href="@{/}" th:if="${app == false}">
+									<img th:src="@{/images/dcsolutionslogo.png}" style="height: 80px;" alt=""/>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<!-- Search -->
+					<div class="col-lg-4 order-3 text-lg-left text-right">
+						<div class="header_search">
+							<div class="header_search_content">
+								<div class="header_search_form_container">
+
+									<form th:action="@{/searchProduct}" class="header_search_form clearfix" method="post">
+										<input type="text" name="keyword" required="required" class="header_search_input" placeholder="Search for products..."/>
+										<button type="submit" class="header_search_button trans_300" value="Submit">
+											<img th:src="@{/images/search.png}" alt=""/>
+										</button>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+						<div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+
+							<!-- Cart -->
+							<div class="cart">
+								<a th:href="@{/shoppingCart/cart}">
+									<div class="cart_container d-flex flex-row align-items-center justify-content-end">
+										<div class="cart_icon">
+											<img src="/images/cart.png" alt=""/>
+											<div class="cart_count"><span th:text="${cartQty}"></span></div>
+										</div>
+									</div>
+								</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:fragment="footer">
+
+		<!-- Footer -->
+		<span th:utext="${htmlToInject.footerHtmlFragment}"/>
+
+		<!-- Copyright -->
+		<span th:utext="${htmlToInject.copyrigtHtmlFragment}"/>
+	</div>
+
+	<div th:fragment="body-bottom-scripts">
+		<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+		<script type="text/javascript" th:src="@{/styles/bootstrap4/popper.js}"></script>
+		<script type="text/javascript" th:src="@{/styles/bootstrap4/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/datatables.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/datatables.min.js}"></script>
+
+		<script th:src="@{/js/bootbox.min.js}"></script>
+		<!-- loadingOverlay module -->
+		<script th:src="@{/js/loadingOverlay.js}"></script>
+
+		<!--	OwlCarousel2-2.2.1-->
+		<script th:src="@{/plugins/OwlCarousel2-2.2.1/owl-carousel.js}"></script>
+
+		<script th:src="@{/plugins/slick-1.8.0/slick.js}"></script>
+
+		<script th:src="@{/js/scripts.js}"></script>
+		<script th:src="@{/js/modules/checkout.js}"></script>
+
+		<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+
+		<!--<script product="text/javascript">-->
+            <!--$(document).ready(function () {-->
+                <!--$("#locales").change(function () {-->
+                    <!--var selectedOption = $('#locales').val();-->
+                    <!--if (selectedOption != '') {-->
+                        <!--window.location.replace('?lang=' + selectedOption);-->
+                    <!--}-->
+                <!--});-->
+            <!--});-->
+		<!--</script>-->
+
+	</div>
+</body>
+
+</html>

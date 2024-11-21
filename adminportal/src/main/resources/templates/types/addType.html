@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+
+			<div class="alert alert-danger" role="alert" th:if="${message}">
+				<h2 th:text="${message}"/>
+			</div>
+
+			<form class="form-horizontal" th:object="${type}" th:action="@{/type/addType}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						New Type<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Title</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${type.title}" required="required" placeholder="title" />
+							<span class="help-block">title</span>
+						</div>
+					</div>
+
+					<!-- status of category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active" checked="checked" /> Active </label>
+							<label><input value="false" type="radio" name="active" />Inactive </label>
+							<span class="help-block">Whether the category is active or inactive</span>
+						</div>
+					</div>
+
+					<!-- product -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="subCategoryId">*
+							SubCategory</label>
+						<div class="col-md-8">
+							<select id="subCategoryId" name="subCategoryId" class="form-control">
+								<option value="" selected="selected" disabled="disabled">Please
+									select an option...</option>
+								<option th:each="data : ${subCategory}"
+										th:value="${data.id}"
+										th:selected="${data.id.equals(type.id)}"
+										th:text="${data.title}">TEST</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Description</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description" th:value="${type.description}"
+								placeholder="Description" />
+							<span class="help-block">Description of the category</span>
+						</div>
+					</div>
+
+					<!-- upload images -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="file">Upload type image</label>
+						</div>
+						<div class="col-md-8">
+							<input id="file" type="file" name="file"
+								   th:value="${type.image}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Add Type</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

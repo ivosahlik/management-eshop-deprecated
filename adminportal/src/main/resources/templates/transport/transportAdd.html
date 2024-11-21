@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+
+			<div class="alert alert-danger" role="alert" th:if="${message}">
+				<h2 th:text="${message}"/>
+			</div>
+
+			<form class="form-horizontal" th:object="${dhlTransport}" th:action="@{/transport/addTransport}" method="post" enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						New Transport<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<!-- weight -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="zone1">* Weight (kg)</label>
+						<div class="col-md-8">
+							<select name="weight">
+								<option th:each="weight: ${#numbers.sequence(0,weightKg)}" th:value="${weight}" th:text="${weight}">
+								</option>
+							</select>
+							<span class="help-block">weight kg</span>
+						</div>
+					</div>
+
+					<!-- zone 1 -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="zone1">* Zone 1</label>
+
+						<div class="col-md-8">
+							<input type="text" name="zone1" class="form-control" id="zone1"
+								   th:value="${dhlTransport.zone1}" required="required" placeholder="zone1" />
+							<span class="help-block">zone1</span>
+						</div>
+					</div>
+
+					<!-- zone 2 -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="zone2">* Zone 2</label>
+
+						<div class="col-md-8">
+							<input type="text" name="zone2" class="form-control" id="zone2"
+								   th:value="${dhlTransport.zone2}" required="required" placeholder="zone2" />
+							<span class="help-block">zone2</span>
+						</div>
+					</div>
+
+					<!-- zone 3 -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="zone3">* Zone 3</label>
+
+						<div class="col-md-8">
+							<input type="text" name="zone3" class="form-control" id="zone3"
+								   th:value="${dhlTransport.zone3}" required="required" placeholder="zone3" />
+							<span class="help-block">zone3</span>
+						</div>
+					</div>
+
+					<!-- zone 4 -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="zone4">* Zone 4</label>
+
+						<div class="col-md-8">
+							<input type="text" name="zone4" class="form-control" id="zone4"
+								   th:value="${dhlTransport.zone4}" required="required" placeholder="zone4" />
+							<span class="help-block">zone4</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Add Transport</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

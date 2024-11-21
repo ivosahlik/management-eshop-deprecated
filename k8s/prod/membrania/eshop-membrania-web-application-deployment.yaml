@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: eshop-membrania-web-application
+  name: eshop-membrania-web-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eshop-membrania-web-application
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: eshop-membrania-web-application
+    spec:
+      containers:
+        - name: eshop-membrania-web-application
+          image: docker.io/ivosahlik/eshopweb:0.0.7
+#          livenessProbe:
+#            failureThreshold: 3
+#            httpGet:
+#              path: /health-check
+#              port: 8088
+#              scheme: HTTP
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            successThreshold: 1
+#            timeoutSeconds: 2
+#          readinessProbe:
+#            failureThreshold: 3
+#            httpGet:
+#              path: /health-check
+#              port: 8088
+#              scheme: HTTP
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            successThreshold: 1
+#            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: '1'
+              memory: 2Gi
+            requests:
+              cpu: 200m
+              memory: 1Gi
+          imagePullPolicy: Always
+          env:
+          - name: JAVA_TOOL_OPTIONS
+            value: >-
+              -Dspring.profiles.active=prod
+              -Ddeployment.application=membrania
+          - name: RDS_DB_NAME
+            value: dbprodultrapurewater
+          - name: RDS_HOSTNAME
+            value: mysql
+          - name: RDS_PASSWORD
+            value: Vosa1234.+-UltraPureWater+Adam&
+          - name: RDS_PORT
+            value: "3306"
+          - name: RDS_USERNAME
+            value: ultrapurewater
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
+status: {}

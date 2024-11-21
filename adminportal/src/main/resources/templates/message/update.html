@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+<div th:replace="common/header :: navbar" />
+
+<div class="container">
+
+    <div th:replace="common/macros :: verticalNavigation" />
+
+    <div class="row">
+        <form class="form-horizontal" th:object="${message}" th:action="@{/settings/message/add}" method="post"
+              enctype="multipart/form-data">
+            <fieldset>
+                <legend class="center-block">
+                    Update Message alert <span style="font-size: small"> * is a required field</span>
+                </legend>
+
+                <input hidden="hidden" name="messageId" th:value="${message.messageId}" />
+
+                <!-- title -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="title">* Title</label>
+
+                    <div class="col-md-8">
+                        <input type="text" name="title" class="form-control" id="title"
+                               th:value="${message.title}" required="required" placeholder="title" />
+                        <span class="help-block">title</span>
+                    </div>
+                </div>
+
+                <!-- textMessage -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="textMessage">* Text Message</label>
+                    <div class="col-md-8">
+                        <textarea name="textMessage" rows="10" class="form-control"
+                                  id="textMessage"
+                                  th:value="${message.textMessage}"
+                                  th:text="${message.textMessage}"
+                                  placeholder="textMessage" />
+                        <span class="help-block">textMessage</span>
+                    </div>
+                </div>
+
+                <!-- apps of category -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Apps - DC Solutions/ Membrania</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="app" value="dcsolutions" class="form-check-input" id="app1dcsolution" th:checked="${dcsolutions}"/>
+                        <label class="form-check-label" for="app1dcsolution">app1 - Dc Solution</label>
+                        <input type="checkbox" name="app" value="membrania" class="form-check-input" id="app2membrania" th:checked="${membrania}"/>
+                        <label class="form-check-label" for="app2membrania">app2 - Membrania</label>
+                    </div>
+                </div>
+
+                <!-- active of category -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="active">Status</label>
+                    <div class="col-md-8">
+                        <label>
+                            <input value="true" type="radio" name="active" th:checked="${message.active}" id="active" />Active
+                        </label>
+                        <label><input value="false" type="radio" name="active" th:checked="${!message.active}" />Inactive </label>
+                        <span class="help-block">Whether the settings is active or inactive</span>
+                    </div>
+                </div>
+
+                <!-- showAlert of category -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="showAlert">Show Alert</label>
+                    <div class="col-md-8">
+                        <label>
+                            <input value="true" type="radio" name="showAlert" th:checked="${message.showAlert}" id="showAlert" />Active
+                        </label>
+                        <label><input value="false" type="radio" name="showAlert" th:checked="${!message.showAlert}" />Inactive </label>
+                        <span class="help-block">Whether the settings is active or inactive</span>
+                    </div>
+                </div>
+
+                <!-- backgroundColor -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="backgroundColor">* Background Color</label>
+
+                    <div class="col-md-8">
+                        <input type="text" name="backgroundColor" class="form-control" id="backgroundColor"
+                               th:value="${message.backgroundColor}" required="required" placeholder="e.g. #ff3333" />
+                        <span class="help-block">backgroundColor</span>
+                    </div>
+                </div>
+
+                <!-- color -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="color">* Color</label>
+
+                    <div class="col-md-8">
+                        <input type="text" name="color" class="form-control" id="color"
+                               th:value="${message.color}" required="required" placeholder="e.g. black, red, #ff3333" />
+                        <span class="help-block">color</span>
+                    </div>
+                </div>
+
+                <!-- fontWeight -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="fontWeight">* Font Weight</label>
+
+                    <div class="col-md-8">
+                        <input type="text" name="fontWeight" class="form-control" id="fontWeight"
+                               th:value="${message.fontWeight}" required="required" placeholder="e.g. bold" />
+                        <span class="help-block">fontWeight</span>
+                    </div>
+                </div>
+
+                <!-- fontSize -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="fontSize">* Font Size (px)</label>
+
+                    <div class="col-md-8">
+                        <input type="text" name="fontSize" class="form-control" id="fontSize"
+                               th:value="${message.fontSize}" required="required" placeholder="e.g. 14, 16, 18, 20, 22, 24" />
+                        <span class="help-block">fontSize</span>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a class="btn btn-danger" th:href="@{/}">Cancel</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+
+
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

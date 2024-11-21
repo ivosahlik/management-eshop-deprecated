@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: admin-membrania-web-application
+  name: admin-membrania-web-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-membrania-web-application
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: admin-membrania-web-application
+    spec:
+      containers:
+        - env:
+            - name: JAVA_TOOL_OPTIONS
+              value: >-
+                -Dspring.profiles.active=prod
+            - name: RDS_DB_NAME
+              value: dbprodultrapurewater
+            - name: RDS_HOSTNAME
+              value: mysql
+            - name: RDS_PASSWORD
+              value: Vosa1234.+-UltraPureWater+Adam&
+            - name: RDS_PORT
+              value: "3306"
+            - name: RDS_USERNAME
+              value: ultrapurewater
+          image: docker.io/ivosahlik/adminportal:0.0.6
+#          livenessProbe:
+#            httpGet:
+#              path: /health-check
+#              port: 8091
+#            initialDelaySeconds: 45
+#          readinessProbe:
+#            httpGet:
+#              path: /health-check
+#              port: 8091
+#            initialDelaySeconds: 45
+          resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 1Gi
+          imagePullPolicy: Always
+          name: admin-membrania-web-application
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
+status: {}

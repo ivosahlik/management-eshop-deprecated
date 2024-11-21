@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="table-responsive">
+			<table id="typeListTable" class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr>
+						<th><input th:id="selectAll" type="checkbox" /></th>
+						<th>Country</th>
+						<th>TariffZone</th>
+						<th>Active</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="zone : ${transportTariffZoneList}">
+						<td>
+							<input hidden="hidden" name="id" th:value="${zone.id}" />
+							<input th:id="'selectedZone'+${zone.id}" class="checkboxData" type="checkbox" />
+						</td>
+
+						<td th:text="${zone.country}"></td>
+
+						<td th:text="${zone.zone}"></td>
+
+						<td th:text="${zone.active}"></td>
+
+						<td>
+							<input hidden="hidden" name="id" th:value="${zone.id}" />
+							<button th:id="'zone-'+${zone.id}" class="btn btn-danger btn-xs delete-zone" type="submit" value="delete" >
+								<span class="fa fa-times"></span>
+								Delete
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	<button th:id="deleteSelected" class="btn btn-danger ">Delete Selected</button>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+
+	<script>
+		$(document).ready(function() {
+			$("#typeListTable").DataTable({
+				"lengthMenu": [[5,10,15,20,-1],[5,10,15,20,"All"]],
+				"ordering": false,
+				stateSave: true
+			});
+		});
+	</script>
+</body>
+</html>

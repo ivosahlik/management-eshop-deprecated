@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="verticalNavigation">
+        <div class="col-sm-3">
+            <div class="list-group">
+                <a th:href="@{/settings/message}" class="list-group-item list-group-item-action">Alert Messages</a>
+                <a href="#" class="list-group-item list-group-item-action">Header</a>
+                <a href="#" class="list-group-item list-group-item-action">GDPR</a>
+                <a href="#" class="list-group-item list-group-item-action">Terms and conditions</a>
+                <a th:href="@{/settings/footer}" class="list-group-item list-group-item-action">Footer &amp;&amp; Copyright</a>
+                <a href="#" class="list-group-item list-group-item-action">Carousel</a>
+                <a th:href="@{/banner/list}" class="list-group-item list-group-item-action">Banners</a>
+                <a th:href="@{/video/list}" class="list-group-item list-group-item-action">Videos</a>
+                <a href="#" class="list-group-item list-group-item-action">Logos</a>
+                <a th:href="@{/user/list}" class="list-group-item list-group-item-action">Users</a>
+                <a href="#" class="list-group-item list-group-item-action">Admin</a>
+                <a href="#" class="list-group-item list-group-item-action">Design</a>
+                <a th:href="@{/settings/files}" class="list-group-item list-group-item-action">Files &amp;&amp; Images</a>
+                <a th:href="@{/settings/list}" class="list-group-item list-group-item-action">Tiles (Admin portal)</a>
+            </div>
+        </div>
+    </div>
+
+</html>

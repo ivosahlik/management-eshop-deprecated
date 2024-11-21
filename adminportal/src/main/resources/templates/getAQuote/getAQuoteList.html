@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header"/>
+
+<body>
+<div th:replace="common/header :: navbar"/>
+
+<div class="container">
+    <div class="table-responsive">
+        <table id="typeListTable" class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Company name</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Created</th>
+                <th>Description</th>
+                <th>Answered</th>
+                <th>Answered When</th>
+                <th>Active</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="quote : ${getAQuoteList}">
+                <td th:text="${quote.lastname} + ' ' + ${quote.firstname}"></td>
+                <td th:text="${quote.email}"></td>
+                <td th:text="${quote.phone}"></td>
+                <td th:text="${quote.companyName}"></td>
+                <td th:text="${quote.city}"></td>
+                <td th:text="${quote.country}"></td>
+                <td th:text="${quote.created}"></td>
+                <td th:text="${quote.description}"></td>
+                <td th:text="${quote.answered}"></td>
+                <td th:text="${quote.answeredWhen}"></td>
+                <td th:text="${quote.active}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button th:id="deleteSelected" class="btn btn-danger ">Delete Selected</button>
+</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+<script>
+    $(document).ready(function () {
+        $("#typeListTable").DataTable({
+            "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+            "ordering": true,
+            stateSave: true
+        });
+    });
+</script>
+</body>
+</html>

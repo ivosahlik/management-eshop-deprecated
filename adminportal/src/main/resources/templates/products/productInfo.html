@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/product/productList}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Go back</a></li>
+				<li><a th:href="@{/product/updateProduct?id=}+${product.id}">Edit</a></li>
+			</ol>
+
+		</div>
+
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="panel panel-default">
+				<div class="panel-body">
+					<img th:src="@{/product/imageDisplays/}+${product.id}+'.png'" class="img-responsive center-block" />
+				</div>
+				</div>
+			</div>
+			<div class="col-xs-9">
+				<h3 th:text="${product.productName}"></h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<p><strong>Type: </strong><span th:text="${product.type}"></span></p>
+					</div>
+					<div class="col-xs-6">
+						<p><strong>Concurent price: </strong><span th:text="${product.concurentPrice}"></span></p>
+						<p><strong>Shipping weight: </strong><span th:text="${product.shippingWeight}">Kg</span></p>
+						<p><strong>Our price: </strong><span th:text="${product.ourPrice}"></span></p>
+						<p><strong>In Stock Number: </strong><span th:text="${product.inStockNumber}"></span></p>
+						<p><strong>Active: </strong><span th:text="${product.active}"></span></p>
+						<p><strong>Created: </strong><span th:text="${product.created}"></span></p>
+						<p><strong>User Created: </strong><span th:text="${product.userCreated}"></span></p>
+
+						<p><strong>updated: </strong><span th:text="${product.updated}"></span></p>
+						<p><strong>User Updated: </strong><span th:text="${product.userUpdated}"></span></p>
+					</div>
+				</div>
+
+				<hr/>
+				<p><Strong>Description: </Strong><span th:utext="${product.productDescription}"></span></p>
+
+				<hr/>
+				<p><Strong>Image: </Strong></p>
+				<p><Strong>Original File Name: </Strong><span th:utext="${product.originalFileName}"></span></p>
+				<p><Strong>Content Type: </Strong><span th:utext="${product.contentType}"></span></p>
+				<p><Strong>Image size: </Strong><span th:utext="${product.size}"></span> Kb</p>
+			</div>
+
+		</div>
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

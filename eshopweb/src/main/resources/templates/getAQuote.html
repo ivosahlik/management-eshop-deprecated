@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+	<div class="super_container">
+
+        <div th:replace="common/header :: navbar" />
+
+        <!-- Main Navigation -->
+        <nav id="navbar" class="main_nav">
+            <div class="container">
+                <div th:replace="common/macros :: navbarBreadcrumbMain" />
+                <div class="navbar-container">
+                    <ul class="navbar-breadcrumb">
+                        <li><a th:href="@{/}"><span class="icon icon-home"> </span></a></li>
+                        <li><a th:href="${breadcrumb}" th:text="${breadcrumbTtext}"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+		<div class="container content_sticky_top" style="padding-bottom: 30px;">
+
+            <div class="container" style="width: 800px; margin-top: 30px;">
+
+                <div th:if="${emailWasSend}" class="alert alert-success" role="alert">
+                    <p th:text="${emailWasSend}"></p>
+                </div>
+
+                <div th:if="${emailWasSendThankYou}" class="alert alert-success" role="alert">
+                    <p th:text="${emailWasSendThankYou}"></p>
+                </div>
+
+                <div th:if="${captchaVerifyMessage}" class="container alert alert-danger container" role="alert">
+                    <h5 th:text="${captchaVerifyMessage}"></h5>
+                </div>
+
+                <div>
+                    <h2>Get a quote</h2>
+                    <h3>Please provide your contact information and describe your request to receive quote.</h3>
+                    <hr/>
+                    <p style="text-align: justify">
+                        100% Privacy: Information provided is for pricing purposes only. (Please make sure you provide a valid email address and a correct phone number).
+                    </p>
+                </div>
+
+                <form th:object="${requestPricing}" th:action="@{/getAQoute}" method="post">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="firstname">Firstname</label>
+                            <input th:value="${requestPricing.firstname}"
+                                   name="firstname"
+                                   required="required"
+                                   type="text" class="form-control" id="firstname" placeholder="Firstname"/>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="lastname">Lastname</label>
+                            <input th:value="${requestPricing.lastname}"
+                                    name="lastname"
+                                    required="required"
+                                   type="text" class="form-control" id="lastname" placeholder="Lastname"/>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input th:value="${requestPricing.email}"
+                               name="email"
+                               required="required" type="email" class="form-control" id="email" placeholder="Email"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input th:value="${requestPricing.phone}"
+                               name="phone"
+                               required="required" type="number" class="form-control" id="phone" placeholder="Phone"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="companyName">Company name</label>
+                        <input th:value="${requestPricing.companyName}"
+                               name="companyName"
+                               required="required" type="text" class="form-control" id="companyName" placeholder="Company name"/>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="city">City</label>
+                            <input th:value="${requestPricing.city}"
+                                   name="city"
+                                   required="required" type="text" class="form-control" id="city"/>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="country">Country</label>
+                            <select name="country" id="country" class="form-control">
+                                <option value="">Please select an option</option>
+                                <option th:each="country : ${countriesList}"
+                                        th:text="${country.country}">
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" rows="5" class="form-control"
+                                  id="description" th:value="${requestPricing.description}"
+                                  required="required"
+                                  placeholder="Description" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.getKey()}"></div>
+                    </div>
+
+                    <div style="text-align: right">
+                        <button type="submit" class="btn btn-primary center-pill">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+
+		</div>
+
+	</div>
+
+	<!-- end of container -->
+	<div th:replace="common/header :: footer"/>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+
+	<script>
+		$(document).ready(function() {
+			$('#datatable').DataTable({
+				"lengthMenu":[[5,10,15,20,-1],[5,10,15,20,"All"]],
+				"ordering":false,
+				stateSave:true
+			});
+
+			$("#datatable").on('page.dt', function() {
+				$('html, body').animate({
+					scrollTop: $('#datatable').offset().top
+				}, 200);
+			});
+		});
+	</script>
+
+</body>
+</html>

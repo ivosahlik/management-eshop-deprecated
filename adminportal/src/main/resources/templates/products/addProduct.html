@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:object="${product}" th:action="@{/product/addProduct}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						New Product<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<div class="alert alert-danger" role="alert" th:if="${message}">
+						<h2 th:text="${message}"/>
+					</div>
+
+					<!-- productName -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="productName">* productName</label>
+
+						<div class="col-md-8">
+							<input type="text" name="productName" class="form-control" id="productName"
+								th:value="${product.productName}" required="required" placeholder="productName" />
+						</div>
+					</div>
+
+					<!-- productDescription -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="productDescription">Description</label>
+						<div class="col-md-8">
+							<textarea name="productDescription" rows="5" class="form-control"
+									  id="productDescription" th:value="${product.productDescription}"
+									  placeholder="productDescription" />
+						</div>
+					</div>
+
+					<!-- category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="typeId">Category</label>
+						<div class="col-md-8">
+							<select id="categoryId" name="categoryId" class="form-control">
+								<option value="" selected="selected" disabled="disabled">Please select an option...</option>
+								<option th:each="data : ${category}"
+										th:value="${data.id}"
+										th:selected="${data.id.equals(product.categoryId)}"
+										th:text="${data.title}"></option>
+							</select>
+						</div>
+					</div>
+
+					<!-- type -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="typeId">Type</label>
+						<div class="col-md-8">
+							<select id="typeId" name="typeId" class="form-control">
+								<option value="" selected="selected" disabled="disabled">Please select an option...</option>
+								<option th:each="data : ${type}"
+										th:value="${data.id}"
+										th:selected="${data.id.equals(product.typeId)}"
+										th:text="${data.title}"></option>
+							</select>
+						</div>
+					</div>
+
+					<!-- shipping weight -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="shippingWeight">Shipping Weight</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<input th:value="${product.shippingWeight}" type="number" step="0.01"
+									   name="shippingWeight" class="form-control" id="shippingWeight"
+									   placeholder="Shipping Weight" /> <span
+									class="input-group-addon">Kg</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- list price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="concurentPrice">Concurent Price</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon"><span th:text="#{product.currency.euro}"></span></span> <input
+									th:value="${product.concurentPrice}" type="number" name="concurentPrice" step="0.01"
+									class="form-control" id="concurentPrice" placeholder="List Price" />
+							</div>
+						</div>
+					</div>
+
+					<!-- our price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ourPrice">Our Price</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span th:text="#{product.currency.euro}"></span>
+								</span>
+								<input th:value="${product.ourPrice}" type="number" name="ourPrice" step="0.01"
+									class="form-control" id="ourPrice" placeholder="Our Price" />
+							</div>
+						</div>
+					</div>
+
+					<!-- in stock number -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Number in stock</label>
+						<div class="col-md-8">
+							<input th:value="${product.inStockNumber}" type="number"
+								   name="inStockNumber" class="form-control" id="inStockNumber"
+								   placeholder="Number of in-stock copies" />
+						</div>
+					</div>
+
+					<!-- status of product -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="active">Status</label>
+						<div class="col-md-8">
+							<label>
+								<input value="true" type="radio" name="active" checked="checked" id="active" />Active
+							</label>
+							<label>
+								<input value="false" type="radio" name="active" />Inactive
+							</label>
+						</div>
+					</div>
+
+					<!-- upload images -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="file">Upload product image</label>
+						</div>
+						<div class="col-md-8">
+							<input id="file" type="file" name="file" th:value="${product.image}" />
+						</div>
+					</div>
+
+					<!-- checkbox form -->
+					<div class="form-group" style="margin-left: 275px;">
+
+						<div class="form-group form-check">
+							<input type="checkbox" name="getAQuote" class="form-check-input" id="getAQuote"/>
+							<label class="form-check-label" for="getAQuote">Displaing get a quote</label>
+						</div>
+
+						<div class="form-group form-check">
+							<input type="checkbox" name="addToCart" class="form-check-input" id="addToCart"/>
+							<label class="form-check-label" for="addToCart">Displaing add to cart</label>
+						</div>
+
+						<div class="form-group form-check">
+							<input type="checkbox" name="displayPrice" class="form-check-input" id="displayPrice"/>
+							<label class="form-check-label" for="displayPrice">Displaing price</label>
+						</div>
+
+						<div class="form-group form-check">
+							<input type="checkbox" name="freeShipping" class="form-check-input" id="freeShipping"/>
+							<label class="form-check-label" for="freeShipping">Free Shipping</label>
+						</div>
+					</div>
+					<!-- checkbox form -->
+
+					<hr/>
+
+					<div class="form-group">
+						<fieldset>
+							<div class="row">
+								<div class="col-md-2">
+									<label for="file">LTC</label>
+								</div>
+								<div class="col-sm-10">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="ltc" id="ltc_lw" value="ltc_lw"/>
+										<label class="form-check-label" for="ltc_lw">
+											LTC-LW
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="ltc" id="ltc_4" value="ltc_4"/>
+										<label class="form-check-label" for="ltc_4">
+											LTC-4
+										</label>
+									</div>
+									<div class="form-check disabled">
+										<input class="form-check-input" type="radio" name="ltc" id="ltc_8" value="ltc_8"/>
+										<label class="form-check-label" for="ltc_8">
+											LTC-8
+										</label>
+									</div>
+									<div class="form-check disabled">
+										<input class="form-check-input" type="radio" name="ltc" id="ltc_none" value="" th:checked="${product.ltc eq ''} ? 'checked'"/>
+										<label class="form-check-label" for="ltc_none">
+											NONE
+										</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+
+					<hr/>
+
+					<!-- checkbox form -->
+					<div class="form-group">
+
+						<fieldset>
+							<div class="row">
+								<div class="col-md-2">
+									<label for="file">Banners</label>
+								</div>
+								<div class="col-sm-10">
+									<div class="form-group form-check">
+										<input type="checkbox" name="banner1" class="form-check-input" id="banner1"/>
+										<label class="form-check-label" for="banner1">Banner 1</label>
+									</div>
+
+									<div class="form-group form-check">
+										<input type="checkbox" name="banner2" class="form-check-input" id="banner2"/>
+										<label class="form-check-label" for="banner2">Banner 2</label>
+									</div>
+
+									<div class="form-group form-check">
+										<input type="checkbox" name="banner3" class="form-check-input" id="banner3"/>
+										<label class="form-check-label" for="banner3">Banner 3</label>
+									</div>
+
+									<div class="form-group form-check">
+										<input type="checkbox" name="banner4" class="form-check-input" id="banner4"/>
+										<label class="form-check-label" for="banner4">Banner 4</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<!-- checkbox form -->
+
+					<hr/>
+
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="estimatedDelivery">Estimated Delivery</label>
+						<div class="col-md-8">
+							<input type="text" name="estimatedDelivery" class="form-control" id="estimatedDelivery"
+								   th:value="${product.estimatedDelivery}" placeholder="estimatedDelivery" maxlength="35"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Add Product</button>
+							<a class="btn btn-danger" th:href="@{/product/productList}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

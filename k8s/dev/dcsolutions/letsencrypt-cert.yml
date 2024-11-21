@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: amivos.com
+  namespace: web2-cz-dev
+spec:
+  secretName: amivos.com.info-tls
+  issuerRef:
+    name: letsencrypt-amivos.com
+    kind: ClusterIssuer
+  commonName: amivos.com
+  dnsNames:
+    - amivos.com

@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dcsolutions.cz
+  namespace: web2-cz-prod
+spec:
+  secretName: dcsolutions.cz.info-tls
+  issuerRef:
+    name: letsencrypt-dcsolutions.cz
+    kind: ClusterIssuer
+  commonName: dcsolutions.cz
+  dnsNames:
+    - dcsolutions.cz
+    - www.dcsolutions.cz

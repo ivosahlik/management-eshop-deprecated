@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+<div class="super_container">
+
+	<div th:replace="common/header :: navbar" />
+
+	<nav id="navbar" class="main_nav">
+		<div class="container">
+			<div th:replace="common/macros :: navbarBreadcrumbMain" />
+			<div class="navbar-container">
+				<ul class="navbar-breadcrumb">
+					<li><a th:href="@{/}"><span class="icon icon-home"> </span></a></li>
+					<li><a href="#">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="container content_sticky_top" style="margin-top: 70px; padding-bottom: 100px;">
+
+		<div>
+			<h4>Company details</h4>
+			<span style="font-weight: bold;">DC Solutions s.r.o.</span><br/>
+			<span>Voskovocva 1075/51</span><br/>
+			<span>152 00 PRAGUE 5</span><br/>
+			<span>CZECH REPUBLIC</span><br/>
+		</div>
+
+		<div style="padding-top: 20px;">
+			<span>IČ/CRN: 05263247</span><br/>
+			<span>DIČ/VAT: CZ05263247</span>
+		</div>
+
+		<div style="padding-top: 20px;">
+			<span>Incorporated in Company Register administrated by Municipal Court in Prague, file C 260902</span>
+		</div>
+
+		<div style="padding-top: 20px;">
+			<span style="font-weight: bold;">Bank details</span><br/>
+			<span>Raiffeisen Bank</span><br/>
+			<span>Bank account number: 100984/5500</span><br/>
+			<span>IBAN: CZ3355000000000000100984</span><br/>
+			<span>BIC (SWIFT): RZBCCZPP</span><br/>
+		</div>
+
+		<div style="padding-top: 20px;">
+			<span style="font-weight: bold;">Contact</span><br/>
+			<span>Customer service: <br/>E-mail: <a href="mailto: sales@dcsolutions.cz">sales@dcsolutions.cz</a></span><br/>
+			<span>Phone: +420 739 09 89 89</span>
+		</div>
+
+		<div style="padding-top: 20px;">
+			<span>Technical support:<br/> E-mail: <a href="mailto: tech@dcsolutions.cz">tech@dcsolutions.cz</a></span>
+		</div>
+
+		<div style="padding-top: 20px;">
+			<span><a th:href="@{/}">www.membrania.eu</a></span>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+</body>
+</html>

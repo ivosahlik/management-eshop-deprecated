@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<link href="/css/non-responsive.css" rel="stylesheet" />
+
+<link href="/css/font-awesome.min.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+
+<style>
+
+</style>
+
+</head>
+<body>
+<p>Dear customer,</p>
+<br/>
+<p>To restart your password, please click on the link below or copy the link to the web browser.</p>
+<p><a th:href="${url}">Click here.</a></p>
+<p>This link is only available for 24 hours.</p>
+
+<hr/>
+
+<div class="container">
+
+</div>
+
+<br/>
+
+<div th:replace="common/macros :: automaticAnswer" />
+
+</body>
+</html>

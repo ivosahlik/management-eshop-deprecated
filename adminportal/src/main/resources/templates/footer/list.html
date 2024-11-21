@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+
+		<div th:replace="common/macros :: verticalNavigation" />
+
+		<div class="col-sm-9">
+			<legend class="center-block">
+				List of Footer
+			</legend>
+
+			<div class="table-responsive">
+
+				<a class="btn btn-primary" th:href="@{/settings/footer/add}">add</a>
+
+				<table id="categoryListTable" class="table table-bordered table-hover table-striped">
+					<thead>
+						<tr>
+							<th><input th:id="selectAll" type="checkbox" /></th>
+							<th>Title</th>
+							<th>Active?</th>
+							<th>App</th>
+							<th>Operation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="customSettings : ${customSettingsList}">
+							<td>
+								<input hidden="hidden" name="id" th:value="${customSettings.id}" />
+								<input th:id="'selected'+${customSettings.id}" class="checkboxData" type="checkbox" />
+							</td>
+							<td><a th:href="@{/settings/footer/info(id=${customSettings.id})}"><span th:text="${customSettings.title}"></span></a></td>
+							<td th:text="${customSettings.active}"></td>
+							<td><span class="badge badge-pill badge-danger" th:text="${customSettings.app}"></span></td>
+							<td>
+								<input hidden="hidden" name="id" th:value="${customSettings.id}" />
+								<button th:id="'oneCustomSettings-'+${customSettings.id}" class="btn btn-danger btn-xs delete-product" type="submit" value="delete" >
+									<span class="fa fa-times"></span>
+									Delete
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	<button th:id="deleteSelected" class="btn btn-danger">Delete Selected</button>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+
+	<script>
+		$(document).ready(function() {
+			$("#categoryListTable").DataTable({
+				"lengthMenu": [[5,10,15,20,-1],[5,10,15,20,"All"]],
+				"ordering": false,
+				stateSave: true
+			});
+		});
+	</script>
+</body>
+</html>

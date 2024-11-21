@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+
+			<div class="alert alert-danger" role="alert" th:if="${message}">
+				<h2 th:text="${message}"/>
+			</div>
+
+			<form class="form-horizontal" th:action="@{/subCategory/updateSubCategory}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						Update SubCategory<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<input hidden="hidden" name="id" th:value="${subCategory.id}" />
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Title</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${subCategory.title}" required="required" placeholder="title" />
+							<span class="help-block">title</span>
+						</div>
+					</div>
+
+					<!-- status of sub category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active"
+										  th:checked="${subCategory.active}" /> Active </label> <label><input
+								value="false" type="radio" name="active" th:checked="${!subCategory.active}"/>
+							Inactive </label> <span class="help-block">Whether the subCategory is
+								active or inactive</span>
+						</div>
+					</div>
+
+					<!-- category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="categoryId">*
+							Category</label>
+						<div class="col-md-8">
+							<select id="categoryId" name="categoryId" class="form-control">
+								<option value="" selected="selected" disabled="disabled">Please
+									select an option...</option>
+								<option th:each="data : ${category}"
+										th:value="${data.id}"
+										th:selected="${data.id.equals(subCategory.categoryId)}"
+										th:text="${data.title}">TEST</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Description</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+								id="description"
+								th:value="${subCategory.description}"
+								th:text="${subCategory.description}"
+								placeholder="Description" />
+							<span class="help-block">Description of the subCategory</span>
+						</div>
+					</div>
+
+					<!-- upload images -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="file">Upload subCategory image</label>
+						</div>
+						<div class="col-md-8">
+							<input id="file" type="file" name="file"
+								   th:value="${subCategory.image}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Update SubCategory</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

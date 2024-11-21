@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="breadcrumb">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/categories}">/ Categories</a></li>
+            <li th:class="${categorySeo}?breadcrumb-item:''"><a th:href="${categoryLinkSeo}" th:text="${categorySeo}"></a></li>
+            <li th:class="${subCategorySeo}?breadcrumb-item:''"><a th:href="${subCategoryLinkSeo}" th:text="${subCategorySeo}"></a></li>
+            <li th:class="${typeSeo}?breadcrumb-item:''"><a th:href="${typeLinkSeo}" th:text="${typeSeo}"></a></li>
+            <li th:class="${productSeo}?breadcrumb-item:''"><a th:href="${productLinkSeo}" th:text="${productSeo}"></a></li>
+        </ol>
+    </nav>
+</div>
+
+<div th:fragment="breadcrumbAllProducts">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/products/all}">/ Products All</a></li>
+            <li th:class="${categorySeo}?breadcrumb-item:''"><a th:href="${categoryLinkSeo}" th:text="${categorySeo}"></a></li>
+            <li th:class="${subCategorySeo}?breadcrumb-item:''"><a th:href="${subCategoryLinkSeo}" th:text="${subCategorySeo}"></a></li>
+            <li th:class="${typeSeo}?breadcrumb-item:''"><a th:href="${typeLinkSeo}" th:text="${typeSeo}"></a></li>
+            <li th:class="${productSeo}?breadcrumb-item:''"><a th:href="${productLinkSeo}" th:text="${productSeo}"></a></li>
+        </ol>
+    </nav>
+</div>
+
+<div th:fragment="navCategories">
+    <!-- Categories Menu -->
+
+    <div class="cat_menu_container">
+        <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
+            <div class="cat_burger"><span></span><span></span><span></span></div>
+            <div class="cat_menu_text"><a th:href="@{/categories}" style="color: white;">categories</a></div>
+        </div>
+
+        <ul class="cat_menu">
+            <li>
+                <a th:href="@{/products/all}">All</a>
+            </li>
+            <li th:each="nav:${navigation}" class="hassubs">
+                <a th:each="value : ${nav.value}" th:text="${value.title}" th:href="@{/category/}+${value.categoryTitlePath}"><i class="fas fa-chevron-right"></i></a>
+
+                <ul th:each="value : ${nav.value}">
+
+                    <li th:each="list: ${value.navigation1List}" class="hassubs">
+
+                        <a th:text="${list.title}"
+                           th:href="@{/category/}+${value.categoryTitlePath}+@{/subCategory/}+${list.subCategorytitlePath}"
+                        >Menu Item<i class="fas fa-chevron-right"></i></a>
+
+                        <ul>
+                            <li th:each="navigation2List : ${list.navigation2List}" class="hassubs">
+                                <a th:text="${navigation2List.title}"
+                                   th:href="@{/category/}+${value.categoryTitlePath}+@{/subCategory/}+${list.subCategorytitlePath}+@{/type/}+${navigation2List.typeTitlePath}"
+                                >Menu Item<i class="fas fa-chevron-right"></i></a>
+
+                                <ul>
+                                    <li th:each="navigation3List : ${navigation2List.navigation3List}" class="hassubs">
+                                        <a th:text="${navigation3List.productName}"
+                                           th:href="@{/category/}+${value.categoryTitlePath}+
+                                           @{/subCategory/}+${list.subCategorytitlePath}+
+                                           @{/type/}+${navigation2List.typeTitlePath}+@{/product/}+${navigation3List.productNamePath}"
+
+                                        >Menu Item<i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+<div th:fragment="navCategoriesHidden">
+    <!-- Categories Menu -->
+    <div class="cat_menu_container">
+        <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
+            <div class="cat_burger"><span></span><span></span><span></span></div>
+            <div class="cat_menu_text"><a th:href="@{/categories}" style="color: white;">categories</a></div>
+        </div>
+
+        <ul id="cat_menu_hidden" style="display: none;" class="cat_menu">
+            <li>
+                <a th:href="@{/products/all}">All</a>
+            </li>
+            <li th:each="nav:${navigation}" class="hassubs">
+                <a th:each="value : ${nav.value}" th:text="${value.title}" th:href="@{/category/}+${value.categoryTitlePath}"><i class="fas fa-chevron-right"></i></a>
+
+                <ul th:each="value : ${nav.value}">
+
+                    <li th:each="list: ${value.navigation1List}" class="hassubs">
+
+                        <a th:text="${list.title}"
+                           th:href="@{/category/}+${value.categoryTitlePath}+@{/subCategory/}+${list.subCategorytitlePath}"
+                        >Menu Item<i class="fas fa-chevron-right"></i></a>
+
+                        <ul>
+                            <li th:each="navigation2List : ${list.navigation2List}" class="hassubs">
+                                <a th:text="${navigation2List.title}"
+                                   th:href="@{/category/}+${value.categoryTitlePath}+@{/subCategory/}+${list.subCategorytitlePath}+@{/type/}+${navigation2List.typeTitlePath}"
+                                >Menu Item<i class="fas fa-chevron-right"></i></a>
+
+                                <ul>
+                                    <li th:each="navigation3List : ${navigation2List.navigation3List}" class="hassubs">
+                                        <a th:text="${navigation3List.productName}"
+                                           th:href="@{/category/}+${value.categoryTitlePath}+
+                                       @{/subCategory/}+${list.subCategorytitlePath}+
+                                       @{/type/}+${navigation2List.typeTitlePath}+@{/product/}+${navigation3List.productNamePath}"
+
+                                        >Menu Item<i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="navbarBreadcrumbNavigation">
+    <div class="navbar_navbar">
+
+        <div class="navbar-dropdown">
+            <div class="navbar-top-border-link">
+                <a class="navbar-dropbtn" th:href="@{/products/all}">All</a>
+            </div>
+        </div>
+
+        <div th:each="nav:${navigation}" class="navbar-dropdown">
+
+            <div class="navbar-top-border-link">
+                <a class="navbar-dropbtn" th:each="value : ${nav.value}" th:text="${value.title}" th:href="@{/category/}+${value.categoryTitlePath}"></a>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(value.navigation1List)}" th:each="value : ${nav.value}" class="navbar-dropdown-content" style="padding-top: 15px;">
+               <div>
+                   <div class="navbar-row" >
+                       <div class="navbar-column" th:each="list : ${value.navigation1List}">
+                           <table>
+                               <tr>
+                                   <td style="float: left;">
+                                       <img th:src="@{/api/displaySubCategoryImage/}+${list.id}+'.png'"
+                                            class=" img-responsive center-block image_nav_size" alt="..."/>
+                                   </td>
+                                   <td style="padding-left: 15px;">
+                                       <h3>
+                                           <a th:text="${list.title}" th:href="@{/category/}+${value.categoryTitlePath}+@{/subCategory/}+${list.subCategorytitlePath}">Link 1</a>
+                                       </h3>
+                                       <span th:each="navigation2List : ${list.navigation2List}">
+                                        <a th:text="${navigation2List.title}"
+                                           th:href="@{/category/}+${value.categoryTitlePath}+@{/subCategory/}+${list.subCategorytitlePath}+@{/type/}+${navigation2List.typeTitlePath}"></a>
+                                    </span>
+                                   </td>
+                               </tr>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+<!--        <div class="navbar-dropdown">-->
+<!--            <div class="navbar-top-border-link">-->
+<!--                <a class="navbar-dropbtn" th:href="@{/support}">Support</a>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>
+
+<div th:fragment="navbarBreadcrumbMain">
+
+    <div class="navbar-container">
+        <div th:replace="common/macros :: navbarBreadcrumbNavigation" />
+    </div>
+
+</div>
+
+<div th:fragment="navbarBreadcrumb">
+
+    <div class="navbar-container">
+        <div th:replace="common/macros :: navbarBreadcrumbMain" />
+        <div>
+            <ul class="navbar-breadcrumb">
+                <li th:if="${categorySeo}"><a th:href="@{/}"><span class="icon icon-home"> </span></a></li>
+                <li th:if="${categorySeo}"><a th:href="${categoryLinkSeo}" th:text="${categorySeo}"></a></li>
+                <li th:if="${subCategorySeo}"><a th:href="${subCategoryLinkSeo}" th:text="${subCategorySeo}"></a></li>
+                <li th:if="${typeSeo}"><a th:href="${typeLinkSeo}" th:text="${typeSeo}"></a></li>
+                <li th:if="${productSeo}"><a th:href="${productLinkSeo}" th:text="${productSeo}"></a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<div th:fragment="productBlock">
+    <h6>
+        <span>Price exc. VAT:
+            <span style="color:#db3208;"
+                  th:with="total=${product.ourPrice}"
+                  th:text="${#numbers.formatDecimal(total, 0 ,2)}">
+        </span>
+            <span th:text="#{product.currency.euro}"></span>
+        </span>
+    </h6>
+    <p style="line-height: 10px; margin-top: 15px;">
+        <span>Price inc. VAT (21%):
+            <span style="color:#db3208;"
+                  th:with="total=${product.ourPrice + product.ourPrice * 0.21}"
+                  th:text="${#numbers.formatDecimal(total, 0 ,2)}">
+            </span>
+            <span th:text="#{product.currency.euro}"></span>
+        </span>
+    </p>
+    <p style="line-height: 10px;">
+        Normal Price:
+        <span style="text-decoration: line-through">
+             <span th:with="total=${product.concurentPrice}"
+                   th:text="${#numbers.formatDecimal(total, 0 ,2)}">
+            </span>
+        </span>
+        <span th:text="#{product.currency.euro}"></span>
+    </p>
+    <p style="line-height: 10px;">
+        You save:
+        <span th:text="${#numbers.formatDecimal((product.concurentPrice - product.ourPrice), 0, 'COMMA', 2, 'POINT' )}"></span>
+        <span th:text="#{product.currency.euro}"></span>
+    </p>
+</div>
+
+<div th:fragment="productQtyBlock">
+    <p th:if="${product.inStockNumber&gt;1}">
+        Qty:
+        <select name="qty">
+            <option th:each="qty: ${#numbers.sequence(1,product.inStockNumber)}" th:value="${qty}" th:text="${qty}">
+            </option>
+        </select>
+    </p>
+</div>
+
+<div th:fragment="automaticAnswer">
+    <div class="automatic-answer">
+        <div>
+            <p>Sales Department</p>
+            <p>DC Solutions s.r.o.</p>
+            <p>Voskovcova 1075/51</p>
+            <p>152 00 PRAGUE 5</p>
+            <p>CZECH REPUBLIC</p>
+            <p>IČ/CRN: 05263247</p>
+            <p>DIČ/VAT: CZ05263247</p>
+            <p>Customer service:</p>
+            <p>E-mail: sales@dcsolutions.cz</p>
+            <p>Phone: +420 739 09 89 89</p>
+        </div>
+
+        <div style="padding-top: 5px;">
+            <p><a href="www.membrania.eu">www.membrania.eu</a> </p>
+        </div>
+
+    </div>
+</div>
+
+<div th:fragment="newsletter">
+    <div class="newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
+                        <div class="newsletter_title_container">
+                            <!--<div class="newsletter_title">sfsdfsdfds</div>-->
+                            <!--<div class="newsletter_text"><p>...sfdfdsfsfdsfdsfdsfdsfsd.</p></div>-->
+                        </div>
+                        <div class="newsletter_content clearfix">
+                            <!--<form action="#" class="newsletter_form">-->
+                                <!--<input type="email" class="newsletter_input" required="required" placeholder="Enter your email address"/>-->
+                                <!--<button class="newsletter_button">Send news</button>-->
+                            <!--</form>-->
+                            <!--<div class="newsletter_unsubscribe_link"><a href="#">Send news disable</a></div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:fragment="order-summary">
+
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-8">Total before vat:</div>
+        <div class="col-6 col-md-4">
+            <span th:text="#{product.currency.euro}"></span>
+            <span th:with="tax=${shoppingCart.sumTotalOrderWithShipping}" th:text="${#numbers.formatDecimal(tax, 0 ,2)}"></span>
+        </div>
+    </div>
+
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-8">VAT (21%):</div>
+        <div class="col-6 col-md-4">
+            <span th:text="#{product.currency.euro}"></span>
+            <span th:with="tax=${shoppingCart.GrandTotalVat}" th:text="${#numbers.formatDecimal(tax, 1 ,2)}"></span>
+        </div>
+    </div>
+
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-8">Shipping included (DHL):</div>
+        <div class="col-6 col-md-4">
+            <span th:text="${tariffZoneAndGrandWidthTotal} ? #{product.currency.euro} : ''"></span>
+            <span id="shipping-included-dhl" th:with="tax=${shoppingCart.shipping}"
+                  th:style="${tariffZoneAndGrandWidthTotal ? '' : 'color: #db3208'}"
+                  th:text="${tariffZoneAndGrandWidthTotal ? #numbers.formatDecimal(tax, 1 ,2) : 'n/a' }">
+            </span>
+        </div>
+    </div>
+
+    <div th:if="${lessThenCrateLtc}" class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-8">Less Then crate included (Ltc):</div>
+        <div class="col-6 col-md-4">
+            <span th:text="#{product.currency.euro}"></span>
+            <span  th:text="${#numbers.formatDecimal(300, 1 ,2)}"></span>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-8">Shipping weight (kg):</div>
+        <div class="col-6 col-md-4">
+            <span th:with="tax=${shoppingCart.grandWidthTotal}" th:text="${#numbers.formatDecimal(tax, 0 ,2)}"></span> Kg
+        </div>
+        <div class="col-12 col-sm-6 col-md-8">Tariff zone:</div>
+        <div class="col-6 col-md-4">
+            <span th:text="${tariffZone}"></span>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row no-gutters">
+        <div class="col-12 col-sm-6 col-md-8">Order Total: </div>
+        <div class="col-6 col-md-4">
+            <strong style="color: darkred;"><span th:text="#{product.currency.euro}"></span>
+                <span id="orderTotal"
+                      th:with="total=${shoppingCart.sumTotalOrderWithShippingAndIncludeVat}"
+                      th:text="${#numbers.formatDecimal(total, 0 ,2)}"></span>
+            </strong>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:fragment="orderShippingAndOrderGrandWidthTotal">
+    <span th:text="${orderShippingAndOrderGrandWidthTotal} ? #{product.currency.euro} : ''"></span>
+    <span th:style="${orderShippingAndOrderGrandWidthTotal ? '' : 'color: #db3208'}"
+          data-th-text="${orderShippingAndOrderGrandWidthTotal ? order.orderShipping : 'n/a'}">
+    </span>
+</div>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:object="${support}" th:action="@{/support/add/}" method="post" enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						Edit Banner<span style="font-size: small"> * is a required field</span>
+					</legend>
+
+					<div class="alert alert-danger" role="alert" th:if="${message}">
+						<h2 th:text="${message}"/>
+					</div>
+
+					<input hidden="hidden" name="id" th:value="${support.id}" />
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Title</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${support.title}" required="required" placeholder="title" />
+							<span class="help-block">title</span>
+						</div>
+					</div>
+
+					<!-- apps of category -->
+					<div class="form-group">
+						<label class="col-md-2 control-label">Apps - DC Solutions/ Membrania</label>
+						<div class="col-md-8">
+							<input type="checkbox" name="apps" value="dcsolutions" class="form-check-input" id="app1dcsolution" th:checked="${dcsolutions}"/>
+							<label class="form-check-label" for="app1dcsolution">app1 - Dc Solution</label>
+							<input type="checkbox" name="apps" value="membrania" class="form-check-input" id="app2membrania" th:checked="${membrania}"/>
+							<label class="form-check-label" for="app2membrania">app2 - Membrania</label>
+						</div>
+					</div>
+
+					<!-- description -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="description">Description</label>
+						<div class="col-md-8">
+							<textarea name="description" rows="5" class="form-control"
+									  id="description"
+									  th:value="${support.description}"
+									  th:text="${support.description}"
+									  placeholder="Description" />
+							<span class="help-block">Description of the subCategory</span>
+						</div>
+					</div>
+
+					<!-- status of support -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="active">Status</label>
+						<div class="col-md-8">
+							<label>
+								<input value="true" type="radio" name="active" th:checked="${support.active}" id="active" />Active
+							</label>
+							<label><input value="false" type="radio" name="active" th:checked="${!support.active}" />Inactive </label>
+							<span class="help-block">Whether the banner is active or inactive</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-success">Edit Support</button>
+							<a class="btn btn-danger" th:href="@{/support/list}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

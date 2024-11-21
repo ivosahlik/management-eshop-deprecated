@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/type/typeList}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>Go back</a></li>
+				<li><a th:href="@{/type/updateType?id=}+${type.id}">Edit</a></li>
+			</ol>
+
+		</div>
+
+		<div class="row">
+			<div class="col-xs-3">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<img th:src="@{/type/imageDisplays/}+${type.id}+'.png'" class="img-responsive center-block" />
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-9">
+				<h3 th:text="${type.title}"></h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<p><strong>active: </strong><span th:text="${type.active}"></span></p>
+					</div>
+					<div class="col-xs-6">
+						<p><strong>created: </strong><span th:text="${type.created}"></span></p>
+						<p><strong>userCreated: </strong><span th:text="${type.userCreated}"></span></p>
+
+						<p><strong>updated: </strong><span th:text="${type.updated}"></span></p>
+						<p><strong>userUpdated: </strong><span th:text="${type.userUpdated}"></span></p>
+
+					</div>
+				</div>
+
+				<hr/>
+				<p><Strong>Description: </Strong><span th:utext="${type.description}"></span></p>
+
+				<hr/>
+				<p><Strong>Image: </Strong></p>
+				<p><Strong>original File Name: </Strong><span th:utext="${type.originalFileName}"></span></p>
+				<p><Strong>content Type: </Strong><span th:utext="${type.contentType}"></span></p>
+				<p><Strong>image size: </Strong><span th:utext="${type.size}"></span> Kb</p>
+
+
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>

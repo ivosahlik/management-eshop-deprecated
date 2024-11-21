@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eshop-dcsolutions-web-application-config-map
+  namespace: default
+data:
+  JAVA_TOOL_OPTIONS: >-
+    -Dspring.profiles.active=prod
+    -Ddeployment.application=dcsolutions
+  RDS_DB_NAME: dbprodultrapurewater
+  RDS_HOSTNAME: mysql
+  RDS_PASSWORD: dummypassword
+  RDS_PORT: "3306"
+  RDS_USERNAME: root
